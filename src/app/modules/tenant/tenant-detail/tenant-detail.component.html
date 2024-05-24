@@ -1,0 +1,705 @@
+<div class="container content mt-5">
+  <div class="col-lg-10 offset-lg-1 col-sm-12">
+    <div class="card">
+      <i class="fa fa-arrow-left back-button-icon" aria-hidden="true" (click)="onNavigateBack()"></i>
+      <div class="card-header text-center">
+        <h3>Tenant Details</h3>
+      </div>
+      <div class="card-body">
+        <ng-container *ngIf="searchResult && searchResult.tenantId">
+          <div class="tenant_card_wrapper">
+            <ng-container>
+              <div class="row">
+                <div class="col">
+                  <span
+                    ><i class="fa fa-bullseye" aria-hidden="true"></i> Tenant
+                    Name:
+                  </span>
+                  <strong>{{ searchResult.tenantName || "NA" }}</strong>
+                </div>
+                <div class="col">
+                  <span
+                    ><i class="fa fa-bullseye" aria-hidden="true"></i>Tenant ID:
+                  </span>
+                  <strong>{{ searchResult.tenantId }}</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <span
+                    ><i class="fa fa-lock" aria-hidden="true"></i> Custom
+                    Domain:
+                  </span>
+                  <strong>{{ searchResult.customDomain || "NA" }}</strong>
+                </div>
+                <div class="col">
+                  <span
+                    ><i class="fa fa-lock" aria-hidden="true"></i> Domain:
+                  </span>
+                  <strong>{{ searchResult.domainName }}</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <span
+                    ><i class="fa fa-globe" aria-hidden="true"></i>Ws2 Url:
+                  </span>
+                  <strong>{{ searchResult.ws2Url || "NA" }}</strong>
+                </div>
+                <div class="col">
+                  <span
+                    ><i class="fa fa-globe" aria-hidden="true"></i> Erp Url:
+                  </span>
+                  <strong>{{ searchResult.erpUrl || "NA" }}</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <span
+                    ><i class="fa fa-envelope" aria-hidden="true"></i>Email:
+                  </span>
+                  <strong>{{ searchResult.email || "NA" }}</strong>
+                </div>
+              </div>
+
+              <!-- Bonanza Connect Info -->
+              <ng-container *ngIf="searchResult?.bonanzaConnect?.email">
+                <h5 class="card-header">Bonanza Connect Info</h5>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-envelope" aria-hidden="true"></i
+                      >Email:</span
+                    >
+                    <strong>{{
+                      searchResult?.bonanzaConnect?.email || "NA"
+                    }}</strong>
+                  </div>
+                </div>
+              </ng-container>
+
+              <!-- GHL Info -->
+              <ng-container *ngIf="searchResult?.GHL?.companyId">
+                <h5 class="card-header">GHL Info</h5>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-info" aria-hidden="true"></i>Name:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.name || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-info" aria-hidden="true"></i>Company
+                      Id:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.companyId || "NA" }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-map-marker" aria-hidden="true"></i
+                      >Address:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.address || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                      >City:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.city || "NA" }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                      >State:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.state || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                      >Country:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.country || "NA" }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-info" aria-hidden="true"></i>Postal
+                      Code:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.postalCode || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-clock-o" aria-hidden="true"></i>Time
+                      Zone:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.timezone || "NA" }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-globe" aria-hidden="true"></i
+                      >Website:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.website || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-snapchat" aria-hidden="true"></i>Snapshot
+                      Id:</span
+                    >
+                    <strong>{{ searchResult?.GHL?.snapshotId || "NA" }}</strong>
+                  </div>
+                </div>
+                <ng-container>
+                  <h6 class="card-header">Prospect</h6>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-bullseye" aria-hidden="true"></i>
+                        First Name:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.prospectInfo?.firstName || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-bullseye" aria-hidden="true"></i>
+                        Last Name:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.prospectInfo?.lastName || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-envelope" aria-hidden="true"></i
+                        >Email:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.prospectInfo?.email || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container>
+                  <h6 class="card-header">Settings</h6>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-cogs" aria-hidden="true"></i>Allow
+                        Duplicate Contact:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.settings
+                          ?.allowDuplicateOpportunity || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-cogs" aria-hidden="true"></i>Allow
+                        Duplicate Opportunity:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.settings
+                          ?.allowDuplicateOpportunity || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-cogs" aria-hidden="true"></i>Allow
+                        Facebook Name Merge:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.settings.allowFacebookNameMerge ||
+                          "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-cogs" aria-hidden="true"></i>Disable
+                        Contact Timezone:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.settings.disableContactTimezone ||
+                          "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container>
+                  <h6 class="card-header">Social</h6>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-facebook-square" aria-hidden="true"></i
+                        >Facebook Url:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.social?.facebookUrl || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i
+                          class="fa fa-google-plus-square"
+                          aria-hidden="true"
+                        ></i
+                        >Google Plus:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.social?.googlePlus || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-linkedin-square" aria-hidden="true"></i
+                        >LinkedIn:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.linkedIn || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-twitter" aria-hidden="true"></i
+                        >Twitter:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.twitter || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-yelp" aria-hidden="true"></i
+                        >Yelp:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.yelp || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-instagram" aria-hidden="true"></i
+                        >Instagram:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.instagram || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-youtube" aria-hidden="true"></i
+                        >Youtube:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.youtube || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-pinterest" aria-hidden="true"></i
+                        >Pinterest:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.pinterest || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i>Blog
+                        Rss:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.blogRss || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i>Google
+                        PlacesId:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.social.googlePlacesId || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container>
+                  <h6 class="card-header">Twillo</h6>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i> Sid:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.twilio?.sid || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i> Auth
+                        Token:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.twillo?.authToken || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container>
+                  <h6 class="card-header">Mail Gun</h6>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i> Api Key:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.mailgun?.apiKey || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i> Domain:
+                      </span>
+                      <strong>{{
+                        searchResult?.GHL?.mailgun?.domain || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+
+              <!-- Bankelo Info -->
+              <ng-container *ngIf="searchResult?.bankelo?.externalId">
+                <div class="row card-header">
+                  <div class="col">
+                    <h5>Bankelo Info</h5>
+                  </div>
+                  <div class="col text-end">
+                    <button
+                      class="btn btn-dark btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#onBoarding"
+                      [disabled]="
+                        !searchResult?.bankelo ||
+                        searchResult?.bankelo.status ===
+                          'SUBMITTED_FOR_CUSTOMER'
+                      "
+                    >
+                      Submit for Approval
+                    </button>
+                    <!-- <span class="{{searchResult?.bankelo.status || 'PENDING'}}">{{searchResult?.bankelo.status || 'PENDING'}}</span> -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-info" aria-hidden="true"></i>Legal
+                      Name:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.legalName || "NA"
+                    }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-info" aria-hidden="true"></i>External
+                      Id:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.externalId || "NA"
+                    }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-map-marker" aria-hidden="true"></i
+                      >Registration Number:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.registrationNumber || "NA"
+                    }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                      >Side:</span
+                    >
+                    <strong>{{ searchResult?.bankelo?.side || "NA" }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                      >Organization Type:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.organizationType || "NA"
+                    }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                      >Industry:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.industry || "NA"
+                    }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-info" aria-hidden="true"></i>Line Of
+                      Business:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.lineOfBusiness || "NA"
+                    }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-clock-o" aria-hidden="true"></i>Tax
+                      Id:</span
+                    >
+                    <strong>{{ searchResult?.bankelo?.taxId || "NA" }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-globe" aria-hidden="true"></i>Country Of
+                      Operation:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.countryOfOperation || "NA"
+                    }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-snapchat" aria-hidden="true"></i>Country
+                      of Registration:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.countryOfRegistration || "NA"
+                    }}</strong>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-globe" aria-hidden="true"></i>Currency
+                      Code:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.currencyCode || "NA"
+                    }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-snapchat" aria-hidden="true"></i
+                      >Website:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.website || "NA"
+                    }}</strong>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-globe" aria-hidden="true"></i>Mobile
+                      Country Code:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.mobileCountryCode || "NA"
+                    }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-snapchat" aria-hidden="true"></i>Mobile
+                      Number:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.mobileNumber || "NA"
+                    }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-globe" aria-hidden="true"></i>Business
+                      Description:</span
+                    >
+                    <strong>{{
+                      searchResult?.bankelo?.businessDescription || "NA"
+                    }}</strong>
+                  </div>
+                </div>
+
+                <ng-container>
+                  <h6 class="card-header">Billing Address</h6>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i
+                        >Address:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.addressLine1 || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-snapchat" aria-hidden="true"></i>Postal
+                        Code:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.postalCode || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i
+                        >City:</span
+                      >
+                      <strong>{{ searchResult?.bankelo?.city || "NA" }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-snapchat" aria-hidden="true"></i
+                        >Province:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.province || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i
+                        >Country:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.country || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="searchResult?.bankelo?.documents?.length">
+                  <h6 class="card-header">Documents</h6>
+                  <div
+                    class="row"
+                    *ngFor="let doc of searchResult?.bankelo?.documents"
+                  >
+                    <div class="col-3">
+                      <span
+                        ><i class="fa fa-file-text-o" aria-hidden="true"></i
+                        >{{ doc.label }}:</span
+                      >
+                    </div>
+                    <div class="col-2">
+                      <button
+                        class="btn btn-dark btn-sm"
+                        (click)="onDownloadDocument(doc.url)"
+                      >
+                        VIEW
+                      </button>
+                    </div>
+                    <div class="col-4" title="Document number">
+                      {{ doc.identifier }}
+                    </div>
+                    <div class="col-3">
+                      <button
+                        class="btn btn-dark btn-sm"
+                        (click)="onSubmitDocumentForApproval(doc.type)"
+                        [disabled]="doc.id || !searchResult?.bankelo.id"
+                      >
+                        SUBMIT FOR APPROVAL
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!searchResult.tenantId">
+          <div class="row text-center">
+            <div class="col">Tenant not found.</div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div
+    class="modal fade"
+    id="onBoarding"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmation</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure to submit?</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="onApplyForBuckzy('parties')"
+          >
+            YES
+          </button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+            NO
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

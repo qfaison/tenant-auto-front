@@ -1,0 +1,1753 @@
+<div class="container-fluid me-0 navbar" *ngIf="isShowNavbar">
+  <ul class="nav nav-tabs" id="pills-tab" role="tablist">
+    <li>
+      <img src="{{ logoUrl }}" class="logo" alt="Bonanza logo" />
+    </li>
+    <li class="nav-item ms-2">
+      <a
+        class="nav-link"
+        id="home-tab"
+        data-toggle="tab"
+        role="tab"
+        aria-controls="home"
+        aria-selected="true"
+        ngClass="{{ isBankelo ? 'active' : '' }}"
+        (click)="onNavigateBankelo()"
+        >Bankelo</a
+      >
+    </li>
+    <li class="nav-item ms-2">
+      <a
+        class="nav-link"
+        id="home-tab"
+        data-toggle="tab"
+        role="tab"
+        aria-controls="home"
+        aria-selected="true"
+        ngClass="{{ isFileUpload ? 'active' : '' }}"
+        (click)="onNavigateFileUpload()"
+        >Document</a
+      >
+    </li>
+  </ul>
+</div>
+<div
+  class="container content mt-5"
+  ngClass="{{ isShowNavbar ? 't-30' : 'mt-15' }}"
+>
+  <!-- Bankelo Form -->
+  <ng-container *ngIf="isBankelo">
+    <div class="col-lg-10 offset-lg-1 col-sm-12 col-md-12 pb-10">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Merchant Account Application</h3>
+          <span class="sub_header">2.8% + .25 cents per transaction</span>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="bankeloInfoForm">
+            <div class="bankelo_card">
+              <legend class="card-header">Business Information</legend>
+              <div class="row mb-3">
+                <div class="col-6">
+                  <label for="establishmentDate">Establishment Date</label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      placeholder="yyyy-mm-dd"
+                      name="dp"
+                      ngbDatepicker
+                      #d="ngbDatepicker"
+                      id="establishmentDate"
+                      formControlName="establishmentDate"
+                      [(ngModel)]="model"
+                      readonly
+                    />
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      (click)="d.toggle()"
+                    >
+                      <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label>Legal Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Legal Name"
+                    formControlName="legalName"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['legalName'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('legalName')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('legalName')?.touched &&
+                        bankeloInfoForm.get('legalName')?.hasError('required')
+                      "
+                    >
+                      *Legal Name required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col form-group">
+                  <label>External Id</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="External Id"
+                    formControlName="externalId"
+                    readonly
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['externalId'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('externalId')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('externalId')?.touched &&
+                        bankeloInfoForm.get('externalId')?.hasError('required')
+                      "
+                    >
+                      *External Id required
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="side">Side</label>
+                  <ng-select
+                    formControlName="side"
+                    id="side"
+                    appendTo="body"
+                    placeholder="Side"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['side'].hasError('required') &&
+                        bankeloInfoForm.get('side')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let side of sides"
+                      [value]="side.value"
+                      >{{ side.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('side')?.touched &&
+                        bankeloInfoForm.get('side')?.hasError('required')
+                      "
+                    >
+                      *Side required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="organizationType">Organization Type</label>
+                  <ng-select
+                    formControlName="organizationType"
+                    id="organizationType"
+                    appendTo="body"
+                    placeholder="Organization Type"
+                    [clearable]="false"
+                  >
+                    <ng-option
+                      *ngFor="let organizationType of organizationTypes"
+                      [value]="organizationType.value"
+                      >{{ organizationType.label }}</ng-option
+                    >
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="industry">Industry</label>
+                  <input
+                    id="industry"
+                    type="text"
+                    class="form-control"
+                    placeholder="Industry"
+                    formControlName="industry"
+                  />
+                </div>
+                <div class="col form-group">
+                  <label for="registrationNumber"
+                    >EIN/Social Security Number</label
+                  >
+                  <input
+                    id="registrationNumber"
+                    type="text"
+                    class="form-control"
+                    placeholder="457-55-5462"
+                    formControlName="registrationNumber"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="lineOfBusiness">Line Of Business</label>
+                  <ng-select
+                    formControlName="lineOfBusiness"
+                    id="lineOfBusiness"
+                    appendTo="body"
+                    placeholder="Line Of Busines"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['lineOfBusiness'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('lineOfBusiness')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let lineOfBusinessCode of lineOfBusinessCodes"
+                      [value]="lineOfBusinessCode.value"
+                      >{{ lineOfBusinessCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('lineOfBusiness')?.touched &&
+                        bankeloInfoForm
+                          .get('lineOfBusiness')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Line Of Business required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="taxId">Tax Id</label>
+                  <input
+                    id="taxId"
+                    type="text"
+                    class="form-control"
+                    placeholder="Tax Id"
+                    formControlName="taxId"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Country Of Operation</label>
+                  <ng-select
+                    formControlName="countryOfOperation"
+                    id="countryOfOperation"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['countryOfOperation'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('countryOfOperation')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('countryOfOperation')?.touched &&
+                        bankeloInfoForm
+                          .get('countryOfOperation')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="countryOfOperation"
+                    >Country Of Registration</label
+                  >
+                  <ng-select
+                    formControlName="countryOfRegistration"
+                    id="countryOfRegistration"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls[
+                          'countryOfRegistration'
+                        ].hasError('required') &&
+                        bankeloInfoForm.get('countryOfRegistration')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('countryOfRegistration')?.touched &&
+                        bankeloInfoForm
+                          .get('countryOfRegistration')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Currency</label>
+                  <ng-select
+                    formControlName="currencyCode"
+                    id="currencyCode"
+                    appendTo="body"
+                    placeholder="Currency"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['currencyCode'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('currencyCode')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let currency of currencyCodes"
+                      [value]="currency.value"
+                      >{{ currency.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('currencyCode')?.touched &&
+                        bankeloInfoForm
+                          .get('currencyCode')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Currency required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="website">Website</label>
+                  <input
+                    id="website"
+                    type="text"
+                    class="form-control"
+                    placeholder="https://example.com"
+                    formControlName="website"
+                  />
+                </div>
+                <div class="col">
+                  <label for="emailAddress">Email</label>
+                  <input
+                    id="emailAddress"
+                    type="email"
+                    class="form-control"
+                    placeholder="bob@example.com"
+                    formControlName="emailAddress"
+                    [ngClass]="{
+                      'is-invalid':
+                        bankeloInfoForm
+                          .get('emailAddress')
+                          ?.hasError('email') &&
+                        bankeloInfoForm.get('emailAddress')?.dirty
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm
+                          .get('emailAddress')
+                          ?.hasError('email') &&
+                        bankeloInfoForm.get('emailAddress')?.dirty
+                      "
+                    >
+                      *Invalid email address.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Mobile Country Code</label>
+                  <ng-select
+                    formControlName="mobileCountryCode"
+                    id="mobileCountryCode"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['mobileCountryCode'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('mobileCountryCode')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let country of countryCodes"
+                      [value]="country.valueWithPrefix"
+                    >
+                      {{ country.label }}[{{ country.valueWithPrefix }}]
+                    </ng-option>
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('mobileCountryCode')?.touched &&
+                        bankeloInfoForm
+                          .get('mobileCountryCode')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="mobileNumber">Mobile</label>
+                  <input
+                    id="mobileNumber"
+                    type="number"
+                    class="form-control"
+                    placeholder="555-456-6666"
+                    formControlName="mobileNumber"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['mobileNumber'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('mobileNumber')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm
+                          .get('mobileNumber')
+                          ?.hasError('required') &&
+                        bankeloInfoForm.get('mobileNumber')?.touched
+                      "
+                    >
+                      *Mobile required.
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('mobileNumber')?.dirty &&
+                        (bankeloInfoForm.get('mobileNumber')?.hasError('min') ||
+                          bankeloInfoForm.get('mobileNumber')?.hasError('max'))
+                      "
+                    >
+                      *Mobile number should be greater than five digits.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="businessDescription">Business Description</label>
+                  <textarea
+                    id="businessDescription"
+                    type="text"
+                    class="form-control"
+                    placeholder="Description"
+                    formControlName="businessDescription"
+                  >
+                  </textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="bankelo_card">
+              <legend class="card-header">Postal Address</legend>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="addressLine1">Address</label>
+                  <textarea
+                    id="addressLine1"
+                    type="text"
+                    class="form-control"
+                    placeholder="Address"
+                    formControlName="addressLine1"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['addressLine1'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('addressLine1')?.touched
+                    }"
+                  ></textarea>
+                </div>
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm
+                        .get('addressLine1')
+                        ?.hasError('required') &&
+                      bankeloInfoForm.get('addressLine1')?.touched
+                    "
+                  >
+                    *Address required.
+                  </p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="postalCode">Postal Code</label>
+                  <input
+                    id="postalCode"
+                    type="text"
+                    class="form-control"
+                    placeholder="Postal Code"
+                    formControlName="postalCode"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['postalCode'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('postalCode')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('postalCode')?.hasError('required') &&
+                      bankeloInfoForm.get('postalCode')?.touched
+                    "
+                  >
+                    *Postal code required.
+                  </p>
+                </div>
+
+                <div class="col form-group">
+                  <label for="city">City</label>
+                  <input
+                    id="city"
+                    type="text"
+                    class="form-control"
+                    placeholder="City"
+                    formControlName="city"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['city'].hasError('required') &&
+                        bankeloInfoForm.get('city')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('city')?.hasError('required') &&
+                      bankeloInfoForm.get('city')?.touched
+                    "
+                  >
+                    *Postal code required.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="province">Province</label>
+                  <input
+                    id="province"
+                    type="text"
+                    class="form-control"
+                    placeholder="Province"
+                    formControlName="province"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['province'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('province')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('province')?.hasError('required') &&
+                      bankeloInfoForm.get('province')?.touched
+                    "
+                  >
+                    *Province required.
+                  </p>
+                </div>
+
+                <div class="col form-group">
+                  <label for="country">Country</label>
+                  <ng-select
+                    formControlName="country"
+                    id="country"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['country'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('country')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('country')?.touched &&
+                        bankeloInfoForm.get('country')?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  type="button"
+                  class="btn btn-dark btn-block W-50"
+                  [disabled]="bankeloInfoForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#bankelo"
+                >
+                  Save
+                </button>
+              </div>
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-dark btn-block W-50 disabled-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#onBoardingParties"
+                  [title]="tooltip"
+                  [disabled]="isDisabled"
+                >
+                  {{ buttonText }}
+                </button>
+              </div>
+            </div>
+            <div class="row text-center"></div>
+          </form>
+
+          <!-- new Form -->
+          <!-- <form [formGroup]="bankeloInfoForm">
+            <div class="bankelo_card">
+              <legend class="card-header">Business Information</legend>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label>Legal Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Legal Name"
+                    formControlName="legalName"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['legalName'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('legalName')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('legalName')?.touched &&
+                        bankeloInfoForm.get('legalName')?.hasError('required')
+                      "
+                    >
+                      *Legal Name required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="registrationNumber"
+                    >EIN/Social Security Number</label
+                  >
+                  <input
+                    id="registrationNumber"
+                    type="text"
+                    class="form-control"
+                    placeholder="457-55-5462"
+                    formControlName="registrationNumber"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col" (click)="d.toggle()">
+                  <label for="establishmentDate">Establishment Date</label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      placeholder="yyyy-mm-dd"
+                      name="dp"
+                      [(ngModel)]="model"
+                      ngbDatepicker
+                      #d="ngbDatepicker"
+                      id="establishmentDate"
+                      readonly
+                    />
+                    <button class="btn btn-outline-secondary" type="button">
+                      <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="taxId">Tax Id</label>
+                  <input
+                    id="taxId"
+                    type="text"
+                    class="form-control"
+                    placeholder="Tax Id"
+                    formControlName="taxId"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <label for="emailAddress">Email</label>
+                  <input
+                    id="emailAddress"
+                    type="email"
+                    class="form-control"
+                    placeholder="bob@example.com"
+                    formControlName="emailAddress"
+                    [ngClass]="{
+                      'is-invalid':
+                        bankeloInfoForm
+                          .get('emailAddress')
+                          ?.hasError('email') &&
+                        bankeloInfoForm.get('emailAddress')?.dirty
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm
+                          .get('emailAddress')
+                          ?.hasError('email') &&
+                        bankeloInfoForm.get('emailAddress')?.dirty
+                      "
+                    >
+                      *Invalid email address.
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="lineOfBusiness">Line Of Business</label>
+                  <ng-select
+                    formControlName="lineOfBusiness"
+                    id="lineOfBusiness"
+                    appendTo="body"
+                    placeholder="Line Of Busines"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['lineOfBusiness'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('lineOfBusiness')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let lineOfBusinessCode of lineOfBusinessCodes"
+                      [value]="lineOfBusinessCode.value"
+                      >{{ lineOfBusinessCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('lineOfBusiness')?.touched &&
+                        bankeloInfoForm
+                          .get('lineOfBusiness')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Line Of Business required
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Country Of Operation</label>
+                  <ng-select
+                    formControlName="countryOfOperation"
+                    id="countryOfOperation"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['countryOfOperation'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('countryOfOperation')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('countryOfOperation')?.touched &&
+                        bankeloInfoForm
+                          .get('countryOfOperation')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="countryOfOperation"
+                    >Country Of Registration</label
+                  >
+                  <ng-select
+                    formControlName="countryOfRegistration"
+                    id="countryOfRegistration"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls[
+                          'countryOfRegistration'
+                        ].hasError('required') &&
+                        bankeloInfoForm.get('countryOfRegistration')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('countryOfRegistration')?.touched &&
+                        bankeloInfoForm
+                          .get('countryOfRegistration')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bankelo_card">
+              <legend class="card-header">Contact Detail</legend>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Mobile Country Code</label>
+                  <ng-select
+                    formControlName="mobileCountryCode"
+                    id="mobileCountryCode"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls[
+                          'mobileCountryCode'
+                        ].hasError('required') &&
+                        bankeloInfoForm.get('mobileCountryCode')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let country of countryCodes"
+                      [value]="country.valueWithPrefix"
+                    >
+                      {{ country.label }}[{{ country.valueWithPrefix }}]
+                    </ng-option>
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('mobileCountryCode')?.touched &&
+                        bankeloInfoForm
+                          .get('mobileCountryCode')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="mobileNumber">Mobile</label>
+                  <input
+                    id="mobileNumber"
+                    type="number"
+                    class="form-control"
+                    placeholder="555-456-6666"
+                    formControlName="mobileNumber"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['mobileNumber'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('mobileNumber')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm
+                          .get('mobileNumber')
+                          ?.hasError('required') &&
+                        bankeloInfoForm.get('mobileNumber')?.touched
+                      "
+                    >
+                      *Mobile required.
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('mobileNumber')?.dirty &&
+                        (bankeloInfoForm
+                          .get('mobileNumber')
+                          ?.hasError('min') ||
+                          bankeloInfoForm
+                            .get('mobileNumber')
+                            ?.hasError('max'))
+                      "
+                    >
+                      *Mobile number lenght should be greather than five
+                      digit.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bankelo_card">
+              <legend class="card-header">Postal Address</legend>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="addressLine1">Address</label>
+                  <textarea
+                    id="addressLine1"
+                    type="text"
+                    class="form-control"
+                    placeholder="Address"
+                    formControlName="addressLine1"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['addressLine1'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('addressLine1')?.touched
+                    }"
+                  ></textarea>
+                </div>
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm
+                        .get('addressLine1')
+                        ?.hasError('required') &&
+                      bankeloInfoForm.get('addressLine1')?.touched
+                    "
+                  >
+                    *Address required.
+                  </p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="postalCode">Postal Code</label>
+                  <input
+                    id="postalCode"
+                    type="text"
+                    class="form-control"
+                    placeholder="Postal Code"
+                    formControlName="postalCode"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['postalCode'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('postalCode')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('postalCode')?.hasError('required') &&
+                      bankeloInfoForm.get('postalCode')?.touched
+                    "
+                  >
+                    *Postal code required.
+                  </p>
+                </div>
+
+                <div class="col form-group">
+                  <label for="city">City</label>
+                  <input
+                    id="city"
+                    type="text"
+                    class="form-control"
+                    placeholder="City"
+                    formControlName="city"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['city'].hasError('required') &&
+                        bankeloInfoForm.get('city')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('city')?.hasError('required') &&
+                      bankeloInfoForm.get('city')?.touched
+                    "
+                  >
+                    *Postal code required.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="province">Province</label>
+                  <input
+                    id="province"
+                    type="text"
+                    class="form-control"
+                    placeholder="Province"
+                    formControlName="province"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['province'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('province')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('province')?.hasError('required') &&
+                      bankeloInfoForm.get('province')?.touched
+                    "
+                  >
+                    *Province required.
+                  </p>
+                </div>
+                <div class="col form-group">
+                  <label for="country">Country</label>
+                  <ng-select
+                    formControlName="country"
+                    id="country"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['country'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('country')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('country')?.touched &&
+                        bankeloInfoForm.get('country')?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  type="button"
+                  class="btn btn-dark btn-block W-50"
+                  [disabled]="bankeloInfoForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#bankelo"
+                >
+                  Save
+                </button>
+              </div>
+              <div class="col" *ngIf="onBoardingStatus === 'PENDING'">
+                <button
+                  type="button"
+                  class="btn btn-dark btn-block W-50"
+                  data-bs-toggle="modal"
+                  data-bs-target="#onBoarding"
+                >
+                  Submit for Approval
+                </button>
+              </div>
+            </div>
+          </form> -->
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Bankelo Modal -->
+  <div class="container-fluid">
+    <div class="modal fade" id="bankelo" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to save?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onCreateBenkelo()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="isFileUpload">
+    <div
+      class="col-lg-10 offset-lg-1 offset-md-1 offset-lg-1 col-sm-12 col-md-10 pb-10"
+    >
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Upload Documents</h3>
+        </div>
+        <div class="card-body">
+          <!-- <div class="row">
+            <div class="col">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="checkOrBankLetter" #checkOrBankLetterCheckbox (change)="onChangeCheckBox($event)" value="checkOrBankLetter">
+                <label class="form-check-label" for="checkOrBankLetter">Voided cheque/Bank Letter</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="ownerProof" #ownerProofCheckbox (change)="onChangeCheckBox($event)" value="ownerProof">
+                <label class="form-check-label" for="ownerProof">Proof of Owner</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="businessProof" #businessProofCheckbox (change)="onChangeCheckBox($event)" value="businessProof">
+                <label class="form-check-label" for="businessProof">Proof Of Business</label>
+              </div>
+            </div>
+          </div> -->
+          <form [formGroup]="uploadFileForm">
+            <div class="row">
+              <div class="col-6 form-group">
+                <label for="checkOrBankLetter">Voided cheque/Bank Letter</label>
+                <ng-select
+                  formControlName="checkOrBankLetter"
+                  id="checkOrBankLetter"
+                  appendTo="body"
+                  placeholder="Select"
+                  [clearable]="false"
+                  [ngClass]="{
+                    error:
+                      uploadFileForm.controls['checkOrBankLetter'].hasError(
+                        'required'
+                      ) && uploadFileForm.get('checkOrBankLetter')?.touched
+                  }"
+                >
+                  <ng-option value="">------Select-------</ng-option>
+                  <ng-option
+                    *ngFor="let checkOrBankLetter of checkOrBankLettersList"
+                    [value]="checkOrBankLetter.value"
+                    >{{ checkOrBankLetter.label }}</ng-option
+                  >
+                </ng-select>
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('checkOrBankLetter')?.touched &&
+                      bankeloInfoForm
+                        .get('checkOrBankLetter')
+                        ?.hasError('required')
+                    "
+                  >
+                    *Chequer/Bank Letter required
+                  </p>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="upload-btn-wrapper">
+                  <button class="btn upload-button">
+                    <i class="fas fa-file-excel fa-3x"></i>
+                  </button>
+                  <div class="button-container">
+                    <input
+                      type="file"
+                      #fileInput
+                      accept=".png, .jpg, .jpeg, .xlsx, .pdf"
+                      [disabled]="
+                        !uploadFileForm.get('checkOrBankLetter')?.value
+                      "
+                      (change)="onFileChange($event, 'checkOrBankLetter')"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-4 form-group">
+                <label for="checkOrBankLetterId">Identifier</label>
+                <input
+                  id="checkOrBankLetterId"
+                  type="text"
+                  class="form-control"
+                  placeholder="Document number"
+                  formControlName="checkOrBankLetterId"
+                />
+              </div>
+              <div class="col-1 view-btn text-center">
+                <button
+                  class="btn btn-dark btn-sm"
+                  (click)="onDownloadDocument(bankLetterOrChequeUrl)"
+                  [disabled]="!bankLetterOrChequeUrl"
+                >
+                  VIEW
+                </button>
+              </div>
+              <div class="col-7 view-btn text-left">
+                <button
+                  class="btn btn-dark btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#onUploadBankLetter"
+                  [title]="bankLetterOrChequeTooltip"
+                  [disabled]="!bankLetterOrChequeUrl || !tenatInfo?.bankelo?.id || isBankLetterOrChequerSubmit"
+                  
+                >
+                  SUBMIT FOR APPROVAL
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6 form-group">
+                <label for="ownerProof">Proof of Owner</label>
+                <ng-select
+                  formControlName="ownerProof"
+                  id="ownerProof"
+                  appendTo="body"
+                  placeholder="Select"
+                  [clearable]="false"
+                  [ngClass]="{
+                    error:
+                      uploadFileForm.controls['ownerProof'].hasError(
+                        'required'
+                      ) && uploadFileForm.get('ownerProof')?.touched
+                  }"
+                >
+                  <ng-option value="">------Select-------</ng-option>
+                  <ng-option
+                    *ngFor="let ownerProof of ownerProofs"
+                    [value]="ownerProof.value"
+                    >{{ ownerProof.label }}</ng-option
+                  >
+                </ng-select>
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('ownerProof')?.touched &&
+                      bankeloInfoForm.get('ownerProof')?.hasError('required')
+                    "
+                  >
+                    *Owner Proof required
+                  </p>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="upload-btn-wrapper">
+                  <button class="btn upload-button">
+                    <i class="fas fa-file-excel fa-3x"></i>
+                  </button>
+                  <div class="button-container">
+                    <input
+                      type="file"
+                      #fileInput
+                      placeholder="Upload ssl certificate"
+                      accept=".png, .jpg, .jpeg, .xlsx, .pdf"
+                      [disabled]="!uploadFileForm.get('ownerProof')?.value"
+                      (change)="onFileChange($event, 'ownerProof')"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-4 form-group">
+                <label for="ownerProofId">Identifier</label>
+                <input
+                  id="ownerProofId"
+                  type="text"
+                  class="form-control"
+                  placeholder="Document number"
+                  formControlName="ownerProofId"
+                />
+              </div>
+              <div class="col-1 text-center view-btn">
+                <button
+                  class="btn btn-dark btn-sm"
+                  (click)="onDownloadDocument(ownerProofUrl)"
+                  [disabled]="!ownerProofUrl"
+                >
+                  VIEW
+                </button>
+              </div>
+              <div class="col-7 view-btn">
+                <button
+                  class="btn btn-dark btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#onUploadOwnerProof"
+                  [title]="ownerProofTooltip"
+                  [disabled]="!ownerProofUrl || !tenatInfo?.bankelo?.id || isOwnerProofSubmit"
+                >
+                  SUBMIT FOR APPROVAL
+                </button>
+              </div>
+
+              <div class="row">
+                <div class="col-6 form-group">
+                  <label for="businessProof">Proof of Business</label>
+                  <ng-select
+                    formControlName="businessProof"
+                    id="businessProof"
+                    appendTo="body"
+                    placeholder="Select"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        uploadFileForm.controls['businessProof'].hasError(
+                          'required'
+                        ) && uploadFileForm.get('businessProof')?.touched
+                    }"
+                  >
+                    <ng-option value="">------Select-------</ng-option>
+                    <ng-option
+                      *ngFor="let businessProof of businessProofs"
+                      [value]="businessProof.value"
+                      class="tooltip"
+                      >{{ businessProof.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('businessProof')?.touched &&
+                        bankeloInfoForm
+                          .get('businessProof')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Business Proof required
+                    </p>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="upload-btn-wrapper">
+                    <button class="btn upload-button">
+                      <i class="fas fa-file-excel fa-3x"></i>
+                    </button>
+                    <div class="button-container">
+                      <input
+                        #fileInput
+                        type="file"
+                        placeholder="Upload ssl certificate"
+                        accept=".png, .jpg, .jpeg, .xlsx, .pdf"
+                        [disabled]="!uploadFileForm.get('businessProof')?.value"
+                        (change)="onFileChange($event, 'businessProof')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-4 form-group">
+                  <label for="businessProofId">Identifier</label>
+                  <input
+                    id="businessProofId"
+                    type="text"
+                    class="form-control"
+                    placeholder="Document number"
+                    formControlName="businessProofId"
+                  />
+                </div>
+                <div class="col-1 text-center view-btn">
+                  <button
+                    class="btn btn-dark btn-sm"
+                    (click)="onDownloadDocument(businessProofUrl)"
+                    [disabled]="!businessProofUrl"
+                  >
+                    VIEW
+                  </button>
+                </div>
+                <div class="col-7 view-btn">
+                  <button
+                    class="btn btn-dark btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#onUploadBusinessProof"
+                    [title]="businessProofTooltip"
+                    [disabled]="!businessProofUrl || !tenatInfo?.bankelo?.id || isBusinessProofSubmit"
+                  >
+                    SUBMIT FOR APPROVAL
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="uploadFileForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#fileUpload"
+                  style="width: 25% ;"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- File Upload Modal -->
+  <div class="container-fluid">
+    <div class="modal fade" id="fileUpload" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to save document?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onUploadFile()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- On Boarding Parties Modal -->
+  <div class="container-fluid">
+    <div
+      class="modal fade"
+      id="onBoardingParties"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to submit?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onApplyForBuckzy('parties')"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- On Boarding Documents Owner Proof -->
+    <div class="container-fluid">
+      <div
+        class="modal fade"
+        id="onUploadOwnerProof"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmation</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure to submit?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                (click)="onSubmitDocumentForApproval('ownerProof')"
+              >
+                YES
+              </button>
+              <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+                NO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- On Boarding Documents Letter -->
+        <div class="container-fluid">
+          <div
+            class="modal fade"
+            id="onUploadBankLetter"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Confirmation</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure to submit?</p>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    (click)="onSubmitDocumentForApproval('checkOrBankLetter')"
+                  >
+                    YES
+                  </button>
+                  <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+                    NO
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+            <!-- On Boarding Documents Businesss proof -->
+    <div class="container-fluid">
+      <div
+        class="modal fade"
+        id="onUploadBusinessProof"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmation</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure to submit?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                (click)="onSubmitDocumentForApproval('businessProof')"
+              >
+                YES
+              </button>
+              <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+                NO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+  <!-- On Boarding Customers Modal -->
+  <div class="container-fluid">
+    <div
+      class="modal fade"
+      id="onBoardingCustomers"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to submit?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onApplyForBuckzy('customers')"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

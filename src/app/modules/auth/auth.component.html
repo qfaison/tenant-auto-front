@@ -1,0 +1,60 @@
+<div class="auth">
+  <!-- <div class="header__wrapper">
+    <div class="container">
+      <div class="header__brand" routerLink="/">
+        <img src="assets/images/logo-dark.png" alt="Brand Logo" />
+      </div>
+      <div class="header__action">
+        <button class="btn btn-dark" routerLink="/auth/register">
+          Register
+        </button>
+      </div>
+    </div>
+  </div> -->
+  <div class="auth__form--wrapper">
+    <div class="row">
+      <div class="col">
+        <img class="auth__form--logo" src="{{logoUrl}}" alt="">
+      </div>
+    </div>
+    <form [formGroup]="loginForm">
+      <div class="auth__form">
+        <div class="auth__form--title">Login</div>
+        <!-- <div class="auth__form--social">
+          <div class="auth__form--social-item">
+            <img src="assets/icons/google-coloured.png" alt="Google Icon" />
+            <span>Sign up with Google</span>
+          </div>
+          <div class="auth__form--social-item">
+            <img src="assets/icons/facebook-coloured.png" alt="Facebook Icon" />
+            <span>Sign up with Facebook</span>
+          </div>
+        </div> -->
+        <!-- <div class="auth__form--divider">Or</div> -->
+        <div class="auth__form--input">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter your username"
+            formControlName="username"
+          />
+        </div>
+        <div class="auth__form--input">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter your password"
+            formControlName="password"
+          />
+        </div>
+        <!-- <div class="auth__form--preference">
+          <input type="checkbox" id="rememeber-me" />
+          <label for="rememeber-me">Remember me</label>
+        </div> -->
+        <div class="auth__form--action">
+          <button class="btn btn-dark" (click)="onLogin()">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

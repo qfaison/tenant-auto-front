@@ -1,0 +1,96 @@
+<div class="container content mt-5">
+  <div class="row tenant-list-filter-row">
+    <div class="col-8">
+      <input
+        type="search"
+        class="form-control rounded"
+        placeholder="Search by tenantid or custom domain"
+        aria-label="Search"
+        aria-describedby="search-addon"
+        [formControl]="searchText"
+      />
+    </div>
+    <div class="col-4">
+      <select class="form-control" (change)="onChangeNoOfRows($event)">
+        <option *ngFor="let row of rows" [value]="row">{{ row }} rows</option>
+      </select>
+    </div>
+  </div>
+  <div class="row justify-content-end mb-2">
+    <div class="col-auto">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="onboarding"
+          (change)="onCheckCheckBox($event)"
+        />
+        <label class="form-check-label" for="onboarding">
+          Only onboarding
+        </label>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="tenants.length; else noData">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Tenant Name</th>
+          <th scope="col">Tenant ID</th>
+          <th scope="col">Custom Domain</th>
+          <th scope="col">
+            On boarding
+            <span>(Buckzy)</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let tenant of tenants"
+          (click)="onNavigateToTenantDetail(tenant)"
+        >
+          <td>{{ tenant?.tenantName }}</td>
+          <td>{{ tenant?.tenantId }}</td>
+          <td>{{ tenant?.customDomain || "NA" }}</td>
+          <td
+            *ngIf="
+              tenant?.bankelo?.status === 'SUBMITTED_FOR_CUSTOMER' ||
+              tenant?.bankelo?.status === 'SUBMITTED_FOR_PARTY'
+            "
+          >
+            <i class="fa fa-check-circle submitted" aria-hidden="true"></i>
+            {{ tenant?.bankelo?.createdAt | date : "dd-MM-yyyy" }}
+          </td>
+          <td *ngIf="tenant?.bankelo?.status === 'PENDING'">
+            <i class="fa fa-hourglass-half pending" aria-hidden="true"></i>
+            {{ tenant?.bankelo?.createdAt | date : "dd-MM-yyyy" }}
+          </td>
+          <td *ngIf="!tenant?.bankelo?.createdAt">NA</td>
+        </tr>
+      </tbody>
+    </table>
+    <!---Pagination-->
+    <ngb-pagination
+      class="d-flex justify-content-center"
+      (pageChange)="onPageChange($event)"
+      [collectionSize]="pagination.totalSize"
+      [(page)]="pagination.page"
+      [pageSize]="pagination.limit"
+      [maxSize]="10"
+      [rotate]="true"
+      [ellipses]="false"
+      [boundaryLinks]="true"
+    >
+    </ngb-pagination>
+  </ng-container>
+  <ng-template #noData>
+    <table class="table">
+      <tbody>
+        <tr class="text-center">
+          <td colspan="4">Data not found</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>

@@ -1,0 +1,111 @@
+<div class="container-fluid me-0 navbar navbar-expand-lg navbar-expand-md">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="nav nav-tabs flex-column flex-column flex-sm-row">
+      <li>
+        <img src="{{ logoUrl }}" class="logo" alt="Bonanza logo" />
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          ngClass="{{ isTenantTab ? 'active' : '' }}"
+          id="home-tab"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+          id="navbarDropdownMenuLink"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          ><i class="fa fa-users" aria-hidden="true"></i>Tenant</a
+        >
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li>
+            <a class="dropdown-item" routerLink="tenant/list"
+              ><i class="fa fa-list" aria-hidden="true"></i>List</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="tenant/setup/create"
+              ><i class="fa fa-plus-circle" aria-hidden="true"></i>Create</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="tenant/setup/update"
+              ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="tenant/setup/public"
+              ><i class="fa fa-share-square-o" aria-hidden="true"></i>Public</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="tenant/setup/private"
+              ><i class="fa fa-lock" aria-hidden="true"></i>Private</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="tenant/setup/stop"
+              ><i class="fa fa-ban" aria-hidden="true"></i>Stop</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="tenant/setup/restart"
+              ><i class="fa fa-refresh" aria-hidden="true"></i>Restart</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="contact-tab"
+          ngClass="{{ isGHL ? 'active' : '' }}"
+          data-toggle="tab"
+          role="tab"
+          aria-selected="false"
+          routerLink="tenant/setup/ghl"
+          ><i class="fa fa-cube" aria-hidden="true"></i>GHL</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="contact-tab"
+          ngClass="{{ isBonanzaConnect ? 'active' : '' }}"
+          data-toggle="tab"
+          role="tab"
+          aria-selected="false"
+          routerLink="tenant/setup/bonanza-connect"
+          ><i class="fa fa-futbol-o" aria-hidden="true"></i>Bonanza Connect</a
+        >
+      </li>
+    </ul>
+    <ul class="nav nav-tabs flex-column flex-sm-row logout_ul">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="contact-tab"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="contact"
+          aria-selected="true"
+          (click)="onLogout()"
+          ><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>

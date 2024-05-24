@@ -1,0 +1,2816 @@
+
+<div class="container content mt-5">
+  <!-- Create tenant form -->
+  <ng-container *ngIf="action === 'create'">
+    <div class="col-lg-8 offset-lg-2 col-sm-12 col-md-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Create Tenant</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="tenantCreateForm">
+            <div class="row mb-3">
+              <div class="col">
+                <select
+                  formControlName="domainName"
+                  class="form-control"
+                  [(ngModel)]="selectedDomain"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantCreateForm.get('domainName')?.touched &&
+                      tenantCreateForm.controls['domainName'].errors
+                  }"
+                >
+                  <option disabled value="">Select domain</option>
+                  <option *ngFor="let domain of domains">{{ domain }}</option>
+                </select>
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantCreateForm.get('domainName')?.touched &&
+                      tenantCreateForm.get('domainName')?.hasError('required')
+                    "
+                  >
+                    *Domain is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter api key"
+                  formControlName="apiKey"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantCreateForm.get('apiKey')?.touched &&
+                      tenantCreateForm.controls['apiKey'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantCreateForm.get('apiKey')?.touched &&
+                      tenantCreateForm.get('apiKey')?.hasError('required')
+                    "
+                  >
+                    *Api key is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter tenant name"
+                  formControlName="tenantName"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantCreateForm.get('tenantName')?.touched &&
+                      tenantCreateForm.controls['tenantName'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantCreateForm.get('tenantName')?.touched &&
+                      tenantCreateForm.get('tenantName')?.hasError('required')
+                    "
+                  >
+                    *Tenant name is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter email"
+                  formControlName="email"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantCreateForm.get('email')?.hasError('email') &&
+                      tenantCreateForm.get('email')?.dirty
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantCreateForm.get('email')?.hasError('email') &&
+                      tenantCreateForm.get('email')?.dirty
+                    "
+                  >
+                    *Invalid email address.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter custom domain name"
+                  formControlName="customDomain"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="tenantCreateForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#createTenant"
+                >
+                  Create Tenant
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="container-fluid">
+    <!-- Modal -->
+    <div class="modal fade" id="createTenant" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to create tenant?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onCreateTenant()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update tenant form -->
+  <ng-container  *ngIf="action === 'update'">
+    <div class="col-lg-8 offset-lg-2 col-sm-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Update Tenant</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="tenantUpdateForm">
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter tenant id"
+                  formControlName="tenantId"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantUpdateForm.get('tenantId')?.touched &&
+                      tenantUpdateForm.controls['tenantId'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantUpdateForm.get('tenantId')?.touched &&
+                      tenantUpdateForm.get('tenantId')?.hasError('required')
+                    "
+                  >
+                    *Tenant Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter custom domain name"
+                  formControlName="customDomain"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantUpdateForm.get('customDomain')?.touched &&
+                      tenantUpdateForm.controls['customDomain'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantUpdateForm.get('customDomain')?.touched &&
+                      tenantUpdateForm.get('customDomain')?.hasError('required')
+                    "
+                  >
+                    *Custom domain name is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row doc_row">
+              <div class="col-5 file_upload_label">Upload ssl certificate</div>
+              <div class="col-7">
+                <div class="upload-btn-wrapper">
+                  <button class="btn upload-button">
+                    <i class="fas fa-file-excel fa-3x"></i>
+                  </button>
+                  <div class="button-container">
+                    <input
+                      type="file"
+                      placeholder="Upload ssl certificate"
+                      formControlName="sslCertificate"
+                      (change)="onFileChangeSsl($event)"
+                      accept=".pem, .crt, .ca-bundle, .cer, .p7b, .p7s"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row doc_row">
+              <div class="col-5 file_upload_label">Upload private key</div>
+              <div class="col-7">
+                <div class="upload-btn-wrapper">
+                  <button class="btn upload-button">
+                    <i class="fas fa-file-excel fa-3x"></i>
+                  </button>
+                  <div class="button-container">
+                    <input
+                      type="file"
+                      placeholder="Upload ssl certificate"
+                      formControlName="privateKey"
+                      (change)="onFileChangeKey($event)"
+                      accept=".pem, .crt, .ca-bundle, .cer, .p7b, .p7s, .key"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3 doc_row">
+              <div class="col-5 file_upload_label">
+                Upload bundle (Optional)
+              </div>
+              <div class="col-7">
+                <div class="upload-btn-wrapper">
+                  <button class="btn upload-button">
+                    <i class="fas fa-file-excel fa-3x"></i>
+                  </button>
+                  <div class="button-container">
+                    <input
+                      type="file"
+                      placeholder="Upload bundle"
+                      formControlName="bundle"
+                      (change)="onFileChangeBundle($event)"
+                      accept=".pem, .crt, .ca-bundle, .cer, .p7b, .p7s"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="
+                    !tenantUpdateForm.get('tenantId')?.value ||
+                    !tenantUpdateForm.get('customDomain')?.value
+                  "
+                  data-bs-toggle="modal"
+                  data-bs-target="#updateTenant"
+                >
+                  Update Tenant
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Modal -->
+  <div class="modal fade" id="updateTenant" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmation</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure to update tenant?</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="onUpdateTanant()"
+          >
+            YES
+          </button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+            NO
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stop tenant form -->
+  <ng-container  *ngIf="action === 'stop'">
+    <div class="col-lg-8 offset-lg-2 col-sm-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Stop Tenant</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="tenantStopForm">
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter tenant id"
+                  formControlName="tenantId"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantStopForm.get('tenantId')?.touched &&
+                      tenantStopForm.controls['tenantId'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantStopForm.get('tenantId')?.touched &&
+                      tenantStopForm.get('tenantId')?.hasError('required')
+                    "
+                  >
+                    *Tenant Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter api key"
+                  formControlName="apiKey"
+                  [ngClass]="{
+                    'is-invalid':
+                      tenantStopForm.get('apiKey')?.touched &&
+                      tenantStopForm.controls['apiKey'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      tenantStopForm.get('apiKey')?.touched &&
+                      tenantStopForm.get('apiKey')?.hasError('required')
+                    "
+                  >
+                    *Api key is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="tenantStopForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#stopTenant"
+                >
+                  Stop Tenant
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="container-fluid">
+    <!-- Modal -->
+    <div class="modal fade" id="stopTenant" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to stop tenant?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onStopTenant()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Remove Constrants Form -->
+  <ng-container  *ngIf="action === 'public'">
+    <div class="col-lg-8 offset-lg-2 col-sm-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Make Public</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="removeConstraintsForm">
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter tenant id"
+                  formControlName="tenantId"
+                  [ngClass]="{
+                    'is-invalid':
+                      removeConstraintsForm.get('tenantId')?.touched &&
+                      removeConstraintsForm.controls['tenantId'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      removeConstraintsForm.get('tenantId')?.touched &&
+                      removeConstraintsForm
+                        .get('tenantId')
+                        ?.hasError('required')
+                    "
+                  >
+                    *Tenant Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="removeConstraintsForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#removeConstrants"
+                >
+                  Make Public
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Remove Constrants Modal -->
+  <div class="container-fluid">
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="removeConstrants"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to make public?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onRemoveConstraints()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Add Constrants Form -->
+    <ng-container  *ngIf="action === 'private'">
+      <div class="col-lg-8 offset-lg-2 col-sm-12">
+        <div class="card">
+          <div class="card-header text-center">
+            <h3>Make private</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="addConstraintsForm">
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter tenant id"
+                    formControlName="tenantId"
+                    [ngClass]="{
+                      'is-invalid':
+                        addConstraintsForm.get('tenantId')?.touched &&
+                        addConstraintsForm.controls['tenantId'].errors
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        addConstraintsForm.get('tenantId')?.touched &&
+                        addConstraintsForm
+                          .get('tenantId')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Tenant Id is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col text-center">
+                  <button
+                    class="btn btn-dark"
+                    [disabled]="addConstraintsForm.invalid"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addConstrants"
+                  >
+                    Make Private
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  
+    <!-- Add Constrants Modal -->
+    <div class="container-fluid">
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="addConstrants"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmation</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure to make private?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                (click)="onAddConstraints()"
+              >
+                YES
+              </button>
+              <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+                NO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Restart Tenant Form -->
+  <ng-container  *ngIf="action === 'restart'">
+    <div class="col-lg-8 offset-lg-2 col-sm-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Restart Tenant</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="restartTenantForm">
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter tenant id"
+                  formControlName="tenantId"
+                  [ngClass]="{
+                    'is-invalid':
+                      restartTenantForm.get('tenantId')?.touched &&
+                      restartTenantForm.controls['tenantId'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      restartTenantForm.get('tenantId')?.touched &&
+                      restartTenantForm.get('tenantId')?.hasError('required')
+                    "
+                  >
+                    *Tenant Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="restartTenantForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#restartTenant"
+                >
+                  Restart Tenant
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Restart Tenant Modal -->
+  <div class="container-fluid">
+    <!-- Modal -->
+    <div class="modal fade" id="restartTenant" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to restart tenant?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onRestartTenant()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonanza Connect -->
+  <ng-container *ngIf="action === 'bonanza-connect'">
+    <div
+      class="col-lg-8 offset-lg-2 offset-md-1 offset-lg-1 col-sm-10 col-md-10"
+    >
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Bonanza Connect</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="bonanzaConnectForm">
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter tenant Id"
+                  formControlName="name"
+                  [ngClass]="{
+                    'is-invalid':
+                      bonanzaConnectForm.get('name')?.touched &&
+                      bonanzaConnectForm.controls['name'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bonanzaConnectForm.get('name')?.touched &&
+                      bonanzaConnectForm.get('name')?.hasError('required')
+                    "
+                  >
+                    *Tenant Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter email"
+                  formControlName="email"
+                  [ngClass]="{
+                    'is-invalid':
+                      bonanzaConnectForm.get('email')?.hasError('email') &&
+                      bonanzaConnectForm.get('email')?.dirty
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bonanzaConnectForm.get('email')?.touched &&
+                      bonanzaConnectForm.get('email')?.hasError('required')
+                    "
+                  >
+                    *Email address is required
+                  </p>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bonanzaConnectForm.get('email')?.hasError('email') &&
+                      bonanzaConnectForm.get('email')?.dirty
+                    "
+                  >
+                    *Invalid email address.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Enter password"
+                  formControlName="password"
+                  [ngClass]="{
+                    'is-invalid':
+                      bonanzaConnectForm.get('password')?.touched &&
+                      bonanzaConnectForm.controls['password'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bonanzaConnectForm.get('password')?.touched &&
+                      bonanzaConnectForm.get('password')?.hasError('required')
+                    "
+                  >
+                    *Password is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="bonanzaConnectForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#bonanzaConnect"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- Bonanza Connect Modal -->
+  <div class="container-fluid">
+    <div
+      class="modal fade"
+      id="bonanzaConnect"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to submit?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onSubmitBonanzaConnect()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GHL -->
+  <ng-container *ngIf="action === 'ghl'">
+    <div
+      class="col-lg-10 offset-lg-1 offset-md-1 offset-lg-1 col-sm-10 col-md-10 pb-10"
+    >
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>GHL Create Location</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="ghlForm">
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter name"
+                  formControlName="name"
+                  [ngClass]="{
+                    'is-invalid': ghlForm.controls['name'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      ghlForm.get('name')?.touched &&
+                      ghlForm.get('name')?.hasError('required')
+                    "
+                  >
+                    *Name required
+                  </p>
+                </div>
+              </div>
+              <div class="col">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter company id"
+                  formControlName="companyId"
+                  [ngClass]="{
+                    'is-invalid': ghlForm.controls['companyId'].errors
+                  }"
+                />
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      ghlForm.get('companyId')?.touched &&
+                      ghlForm.get('companyId')?.hasError('required')
+                    "
+                  >
+                    *Company Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter address"
+                  formControlName="address"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter phone number"
+                  formControlName="phone"
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter city"
+                  formControlName="city"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter state"
+                  formControlName="state"
+                />
+              </div>
+              <div class="col">
+                <!-- <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter country"
+                  formControlName="country"
+                /> -->
+                <ng-select
+                  formControlName="country"
+                  appendTo="body"
+                  placeholder="Select Country"
+                  [clearable]="false"
+                  [ngClass]="{
+                    error: ghlForm.controls['country'].hasError('required')
+                  }"
+                >
+                  <ng-option
+                    *ngFor="let country of countries"
+                    [value]="country.code"
+                    >{{ country.name }}</ng-option
+                  >
+                </ng-select>
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      ghlForm.get('country')?.touched &&
+                      ghlForm.get('country')?.hasError('required')
+                    "
+                  >
+                    *Country is required
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter postal code"
+                  formControlName="postalCode"
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter website"
+                  formControlName="website"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter timezone like US/Central"
+                  formControlName="timezone"
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Enter snapshotId"
+                  formControlName="snapshotId"
+                />
+              </div>
+            </div>
+            <fieldset formGroupName="prospectInfo">
+              <legend>Prospect Information</legend>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter firstname"
+                    formControlName="firstName"
+                    [ngClass]="{
+                      'is-invalid': ghlForm.get('prospectInfo.firstName')
+                        ?.errors
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        ghlForm.get('prospectInfo.firstName')?.touched &&
+                        ghlForm.get('prospectInfo.firstName')?.errors
+                      "
+                    >
+                      *First name is required
+                    </p>
+                  </div>
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter lastname"
+                    formControlName="lastName"
+                    [ngClass]="{
+                      'is-invalid': ghlForm.get('prospectInfo.lastName')?.errors
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        ghlForm.get('prospectInfo.lastName')?.touched &&
+                        ghlForm.get('prospectInfo.lastName')?.errors
+                      "
+                    >
+                      *Last name is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Enter email"
+                    formControlName="email"
+                    [ngClass]="{
+                      'is-invalid': ghlForm
+                        .get('prospectInfo.email')
+                        ?.hasError('required')
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      ghlForm.get('prospectInfo.email')?.hasError('email') &&
+                      ghlForm.get('prospectInfo.email')?.dirty
+                    "
+                  >
+                    *Invalid email address.
+                  </p>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      ghlForm.get('prospectInfo.email')?.touched &&
+                      ghlForm.get('prospectInfo.email')?.hasError('required')
+                    "
+                  >
+                    *Email is required.
+                  </p>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset formGroupName="settings">
+              <legend>Settings Information</legend>
+              <div class="row mb-3">
+                <div class="col">
+                  <label for="allowDuplicateContact" class="form-check-label"
+                    >Allow Duplicate Contact</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="allowDuplicateContact"
+                    formControlName="allowDuplicateContact"
+                  />
+                </div>
+                <div class="col">
+                  <label
+                    for="allowDuplicateOpportunity"
+                    class="form-check-label"
+                    >Allow Duplicate Opportunity</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="allowDuplicateOpportunity"
+                    formControlName="allowDuplicateOpportunity"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <label for="allowFacebookNameMerge" class="form-check-label"
+                    >Allow Facebook Name Merge</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="allowFacebookNameMerge"
+                    formControlName="allowFacebookNameMerge"
+                  />
+                </div>
+                <div class="col">
+                  <label for="disableContactTimezone" class="form-check-label"
+                    >Disable Contact Timezone</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="disableContactTimezone"
+                    formControlName="disableContactTimezone"
+                  />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset formGroupName="social">
+              <legend>Prospect Information</legend>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter facebook url"
+                    formControlName="facebookUrl"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter google plus url"
+                    formControlName="googlePlus"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter linkedIn url"
+                    formControlName="linkedIn"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter foursquare url"
+                    formControlName="foursquare"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter twitter url"
+                    formControlName="twitter"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter yelp url"
+                    formControlName="yelp"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter instagram url"
+                    formControlName="instagram"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter youtube url"
+                    formControlName="youtube"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter pinterest url"
+                    formControlName="pinterest"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter blogRss url"
+                    formControlName="blogRss"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter googlePlacesId url"
+                    formControlName="googlePlacesId"
+                  />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset formGroupName="twilio">
+              <legend>Twilio Information</legend>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter sid"
+                    formControlName="sid"
+                    [ngClass]="{
+                      'is-invalid': ghlForm.get('twilio.sid')?.errors
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        ghlForm.get('twilio.sid')?.touched &&
+                        ghlForm.get('twilio.sid')?.errors
+                      "
+                    >
+                      *Sid is required
+                    </p>
+                  </div>
+                </div>
+                <div class="col">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Enter authToken"
+                    formControlName="authToken"
+                    [ngClass]="{
+                      'is-invalid': ghlForm.get('twilio.authToken')?.errors
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        ghlForm.get('twilio.authToken')?.touched &&
+                        ghlForm.get('twilio.authToken')?.errors
+                      "
+                    >
+                      *Auth token is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset formGroupName="mailgun">
+              <legend>Mailgun Information</legend>
+              <div class="row mb-3">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter domain"
+                    formControlName="domain"
+                    [ngClass]="{
+                      'is-invalid': ghlForm.get('mailgun.domain')?.errors
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        ghlForm.get('mailgun.domain')?.touched &&
+                        ghlForm.get('mailgun.domain')?.errors
+                      "
+                    >
+                      *Domain is required
+                    </p>
+                  </div>
+                </div>
+                <div class="col">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Enter apiKey"
+                    formControlName="apiKey"
+                    [ngClass]="{
+                      'is-invalid': ghlForm.get('mailgun.apiKey')?.errors
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        ghlForm.get('mailgun.apiKey')?.touched &&
+                        ghlForm.get('mailgun.apiKey')?.errors
+                      "
+                    >
+                      *Api key is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="ghlForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#chl"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- GHL Modal -->
+  <div class="container-fluid">
+    <div class="modal fade" id="chl" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to submit?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onSubmitGHLCreateLocation()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tenant Detail -->
+  <ng-container *ngIf="isTenantDetail">
+    <div class="col-lg-10 offset-lg-1 col-sm-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Tenant Details</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <input
+                type="search"
+                class="form-control rounded"
+                placeholder="Search by tenant id"
+                aria-label="Search"
+                aria-describedby="search-addon"
+                [formControl]="searchText"
+              />
+            </div>
+            <div class="col-2">
+              <button
+                class="btn btn-dark"
+                [disabled]="searchText.invalid"
+                (click)="onSearchTenant()"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <ng-container *ngIf="searchResult && searchResult.tenantId">
+            <div class="tenant_card_wrapper">
+              <ng-container>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-bullseye" aria-hidden="true"></i> Tenant
+                      Name:
+                    </span>
+                    <strong>{{ searchResult.tenantName || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-bullseye" aria-hidden="true"></i>Tenant
+                      ID:
+                    </span>
+                    <strong>{{ searchResult.tenantId }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-lock" aria-hidden="true"></i> Custom
+                      Domain:
+                    </span>
+                    <strong>{{ searchResult.customDomain || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-lock" aria-hidden="true"></i> Domain:
+                    </span>
+                    <strong>{{ searchResult.domainName }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-globe" aria-hidden="true"></i>Ws2 Url:
+                    </span>
+                    <strong>{{ searchResult.ws2Url || "NA" }}</strong>
+                  </div>
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-globe" aria-hidden="true"></i> Erp Url:
+                    </span>
+                    <strong>{{ searchResult.erpUrl || "NA" }}</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span
+                      ><i class="fa fa-envelope" aria-hidden="true"></i>Email:
+                    </span>
+                    <strong>{{ searchResult.email || "NA" }}</strong>
+                  </div>
+                </div>
+
+                <!-- Bonanza Connect Info -->
+                <ng-container *ngIf="searchResult?.bonanzaConnect?.email">
+                  <h5 class="card-header">Bonanza Connect Info</h5>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-envelope" aria-hidden="true"></i
+                        >Email:</span
+                      >
+                      <strong>{{
+                        searchResult?.bonanzaConnect?.email || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <!-- GHL Info -->
+                <ng-container *ngIf="searchResult?.GHL?.companyId">
+                  <h5 class="card-header">GHL Info</h5>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i
+                        >Name:</span
+                      >
+                      <strong>{{ searchResult?.GHL?.name || "NA" }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i>Company
+                        Id:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.companyId || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-map-marker" aria-hidden="true"></i
+                        >Address:</span
+                      >
+                      <strong>{{ searchResult?.GHL?.address || "NA" }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                        >City:</span
+                      >
+                      <strong>{{ searchResult?.GHL?.city || "NA" }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                        >State:</span
+                      >
+                      <strong>{{ searchResult?.GHL?.state || "NA" }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                        >Country:</span
+                      >
+                      <strong>{{ searchResult?.GHL?.country || "NA" }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i>Postal
+                        Code:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.postalCode || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-clock-o" aria-hidden="true"></i>Time
+                        Zone:</span
+                      >
+                      <strong>{{ searchResult?.GHL?.timezone || "NA" }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i
+                        >Website:</span
+                      >
+                      <strong>{{ searchResult?.GHL?.website || "NA" }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-snapchat" aria-hidden="true"></i
+                        >Snapshot Id:</span
+                      >
+                      <strong>{{
+                        searchResult?.GHL?.snapshotId || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <ng-container>
+                    <h6 class="card-header">Prospect</h6>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-bullseye" aria-hidden="true"></i>
+                          First Name:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.prospectInfo?.firstName || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-bullseye" aria-hidden="true"></i>
+                          Last Name:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.prospectInfo?.lastName || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-envelope" aria-hidden="true"></i
+                          >Email:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.prospectInfo?.email || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container>
+                    <h6 class="card-header">Settings</h6>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-cogs" aria-hidden="true"></i>Allow
+                          Duplicate Contact:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.settings
+                            ?.allowDuplicateOpportunity || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-cogs" aria-hidden="true"></i>Allow
+                          Duplicate Opportunity:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.settings
+                            ?.allowDuplicateOpportunity || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-cogs" aria-hidden="true"></i>Allow
+                          Facebook Name Merge:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.settings.allowFacebookNameMerge ||
+                            "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-cogs" aria-hidden="true"></i>Disable
+                          Contact Timezone:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.settings.disableContactTimezone ||
+                            "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container>
+                    <h6 class="card-header">Social</h6>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i
+                            class="fa fa-facebook-square"
+                            aria-hidden="true"
+                          ></i
+                          >Facebook Url:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.social?.facebookUrl || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i
+                            class="fa fa-google-plus-square"
+                            aria-hidden="true"
+                          ></i
+                          >Google Plus:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.social?.googlePlus || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i
+                            class="fa fa-linkedin-square"
+                            aria-hidden="true"
+                          ></i
+                          >LinkedIn:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.linkedIn || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-twitter" aria-hidden="true"></i
+                          >Twitter:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.twitter || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-yelp" aria-hidden="true"></i
+                          >Yelp:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.yelp || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-instagram" aria-hidden="true"></i
+                          >Instagram:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.instagram || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-youtube" aria-hidden="true"></i
+                          >Youtube:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.youtube || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-pinterest" aria-hidden="true"></i
+                          >Pinterest:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.pinterest || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-info" aria-hidden="true"></i>Blog
+                          Rss:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.blogRss || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-info" aria-hidden="true"></i>Google
+                          PlacesId:</span
+                        >
+                        <strong>{{
+                          searchResult?.GHL?.social.googlePlacesId || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container>
+                    <h6 class="card-header">Twillo</h6>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-info" aria-hidden="true"></i> Sid:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.twilio?.sid || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-info" aria-hidden="true"></i> Auth
+                          Token:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.twillo?.authToken || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container>
+                    <h6 class="card-header">Mail Gun</h6>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-info" aria-hidden="true"></i> Api
+                          Key:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.mailgun?.apiKey || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-info" aria-hidden="true"></i> Domain:
+                        </span>
+                        <strong>{{
+                          searchResult?.GHL?.mailgun?.domain || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+
+                <!-- Bankelo Info -->
+                <ng-container *ngIf="searchResult?.bankelo?.externalId">
+                  <div class="row card-header">
+                    <div class="col">
+                      <h5>Bankelo Info</h5>
+                    </div>
+                    <div
+                      class="col text-end"
+                    >
+                      <button
+                        class="btn btn-dark btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#onBoarding"
+                        [disabled]="!searchResult?.bankelo || searchResult?.bankelo.status === 'SUBMITTED_FOR_CUSTOMER' "
+                      >
+                        Submit for Approval
+                      </button>
+                      <!-- <span class="{{searchResult?.bankelo.status || 'PENDING'}}">{{searchResult?.bankelo.status || 'PENDING'}}</span> -->
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i>Legal
+                        Name:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.legalName || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i>External
+                        Id:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.externalId || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-map-marker" aria-hidden="true"></i
+                        >Registration Number:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.registrationNumber || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                        >Side:</span
+                      >
+                      <strong>{{ searchResult?.bankelo?.side || "NA" }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                        >Organization Type:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.organizationType || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-location-arrow" aria-hidden="true"></i
+                        >Industry:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.industry || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-info" aria-hidden="true"></i>Line Of
+                        Business:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.lineOfBusiness || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-clock-o" aria-hidden="true"></i>Tax
+                        Id:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.taxId || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i>Country
+                        Of Operation:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.countryOfOperation || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-snapchat" aria-hidden="true"></i
+                        >Country of Registration:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.countryOfRegistration || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i>Currency
+                        Code:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.currencyCode || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-snapchat" aria-hidden="true"></i
+                        >Website:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.website || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i>Mobile
+                        Country Code:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.mobileCountryCode || "NA"
+                      }}</strong>
+                    </div>
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-snapchat" aria-hidden="true"></i>Mobile
+                        Number:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.mobileNumber || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <span
+                        ><i class="fa fa-globe" aria-hidden="true"></i>Business
+                        Description:</span
+                      >
+                      <strong>{{
+                        searchResult?.bankelo?.businessDescription || "NA"
+                      }}</strong>
+                    </div>
+                  </div>
+
+                  <ng-container>
+                    <h6 class="card-header">Billing Address</h6>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-globe" aria-hidden="true"></i
+                          >Address:</span
+                        >
+                        <strong>{{
+                          searchResult?.bankelo?.addressLine1 || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-snapchat" aria-hidden="true"></i
+                          >Postal Code:</span
+                        >
+                        <strong>{{
+                          searchResult?.bankelo?.postalCode || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-globe" aria-hidden="true"></i
+                          >City:</span
+                        >
+                        <strong>{{
+                          searchResult?.bankelo?.city || "NA"
+                        }}</strong>
+                      </div>
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-snapchat" aria-hidden="true"></i
+                          >Province:</span
+                        >
+                        <strong>{{
+                          searchResult?.bankelo?.province || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <span
+                          ><i class="fa fa-globe" aria-hidden="true"></i
+                          >Country:</span
+                        >
+                        <strong>{{
+                          searchResult?.bankelo?.country || "NA"
+                        }}</strong>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="searchResult?.bankelo?.documents?.length"
+                  >
+                    <h6 class="card-header">Documents</h6>
+                    <div
+                      class="row"
+                      *ngFor="let doc of searchResult?.bankelo?.documents"
+                    >
+                      <div class="col-3">
+                        <span
+                          ><i class="fa fa-file-text-o" aria-hidden="true"></i
+                          >{{ doc.label }}:</span
+                        >
+                      </div>
+                      <div class="col-2">
+                        <button
+                          class="btn btn-dark btn-sm"
+                          (click)="onDownloadDocument(doc.url)"
+                        >
+                          VIEW
+                        </button>
+                      </div>
+                      <div class="col-4" title="Document number">
+                        {{ doc.identifier }}
+                      </div>
+                      <div class="col-3">
+                        <button
+                          class="btn btn-dark btn-sm"
+                          (click)="onSubmitDocumentForApproval(doc.type)"
+                          [disabled]="doc.id || !searchResult?.bankelo.id "
+                        >
+                          SUBMIT FOR APPROVAL
+                        </button>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="isSearched && !searchResult.tenantId">
+            <div class="row text-center">
+              <div class="col">Tenant not found.</div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Bankelo Form -->
+  <ng-container *ngIf="isbankelo">
+    <div
+      class="col-lg-8 offset-lg-2 offset-md-1 offset-lg-1 col-sm-10 col-md-10 pb-10"
+    >
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Bankelo Information</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="bankeloInfoForm">
+            <div class="bankelo_card">
+              <legend class="card-header">Business Information</legend>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label>Legal Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Legal Name"
+                    formControlName="legalName"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['legalName'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('legalName')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('legalName')?.touched &&
+                        bankeloInfoForm.get('legalName')?.hasError('required')
+                      "
+                    >
+                      *Legal Name required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col form-group">
+                  <label>External Id</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="External Id"
+                    formControlName="externalId"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['externalId'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('externalId')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('externalId')?.touched &&
+                        bankeloInfoForm.get('externalId')?.hasError('required')
+                      "
+                    >
+                      *External Id required
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="side">Side</label>
+                  <ng-select
+                    formControlName="side"
+                    id="side"
+                    appendTo="body"
+                    placeholder="Side"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['side'].hasError('required') &&
+                        bankeloInfoForm.get('side')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let side of sides"
+                      [value]="side.value"
+                      >{{ side.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('side')?.touched &&
+                        bankeloInfoForm.get('side')?.hasError('required')
+                      "
+                    >
+                      *Side required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="organizationType">Organization Type</label>
+                  <ng-select
+                    formControlName="organizationType"
+                    id="organizationType"
+                    appendTo="body"
+                    placeholder="Organization Type"
+                    [clearable]="false"
+                  >
+                    <ng-option
+                      *ngFor="let organizationType of organizationTypes"
+                      [value]="organizationType.value"
+                      >{{ organizationType.label }}</ng-option
+                    >
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="industry">Industry</label>
+                  <input
+                    id="industry"
+                    type="text"
+                    class="form-control"
+                    placeholder="Industry"
+                    formControlName="industry"
+                  />
+                </div>
+                <div class="col form-group">
+                  <label for="registrationNumber"
+                    >EIN/Social Security Number</label
+                  >
+                  <input
+                    id="registrationNumber"
+                    type="text"
+                    class="form-control"
+                    placeholder="457-55-5462"
+                    formControlName="registrationNumber"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="lineOfBusiness">Line Of Business</label>
+                  <ng-select
+                    formControlName="lineOfBusiness"
+                    id="lineOfBusiness"
+                    appendTo="body"
+                    placeholder="Line Of Busines"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['lineOfBusiness'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('lineOfBusiness')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let lineOfBusinessCode of lineOfBusinessCodes"
+                      [value]="lineOfBusinessCode.value"
+                      >{{ lineOfBusinessCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('lineOfBusiness')?.touched &&
+                        bankeloInfoForm
+                          .get('lineOfBusiness')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Line Of Business required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="taxId">Tax Id</label>
+                  <input
+                    id="taxId"
+                    type="text"
+                    class="form-control"
+                    placeholder="Tax Id"
+                    formControlName="taxId"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Country Of Operation</label>
+                  <ng-select
+                    formControlName="countryOfOperation"
+                    id="countryOfOperation"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['countryOfOperation'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('countryOfOperation')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('countryOfOperation')?.touched &&
+                        bankeloInfoForm
+                          .get('countryOfOperation')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="countryOfOperation"
+                    >Country Of Registration</label
+                  >
+                  <ng-select
+                    formControlName="countryOfRegistration"
+                    id="countryOfRegistration"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls[
+                          'countryOfRegistration'
+                        ].hasError('required') &&
+                        bankeloInfoForm.get('countryOfRegistration')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let countryCode of countryCodes"
+                      [value]="countryCode.value"
+                      >{{ countryCode.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('countryOfRegistration')?.touched &&
+                        bankeloInfoForm
+                          .get('countryOfRegistration')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Currency</label>
+                  <ng-select
+                    formControlName="currencyCode"
+                    id="currencyCode"
+                    appendTo="body"
+                    placeholder="Corrency"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['currencyCode'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('currencyCode')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let currency of currencyCodes"
+                      [value]="currency.value"
+                      >{{ currency.label }}</ng-option
+                    >
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('currencyCode')?.touched &&
+                        bankeloInfoForm
+                          .get('currencyCode')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Currency required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="website">Website</label>
+                  <input
+                    id="website"
+                    type="text"
+                    class="form-control"
+                    placeholder="https://example.com"
+                    formControlName="website"
+                  />
+                </div>
+                <div class="col">
+                  <label for="emailAddress">Email</label>
+                  <input
+                    id="emailAddress"
+                    type="email"
+                    class="form-control"
+                    placeholder="bob@example.com"
+                    formControlName="emailAddress"
+                    [ngClass]="{
+                      'is-invalid':
+                        bankeloInfoForm
+                          .get('emailAddress')
+                          ?.hasError('email') &&
+                        bankeloInfoForm.get('emailAddress')?.dirty
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm
+                          .get('emailAddress')
+                          ?.hasError('email') &&
+                        bankeloInfoForm.get('emailAddress')?.dirty
+                      "
+                    >
+                      *Invalid email address.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="countryOfOperation">Mobile Country Code</label>
+                  <ng-select
+                    formControlName="mobileCountryCode"
+                    id="mobileCountryCode"
+                    appendTo="body"
+                    placeholder="Country"
+                    [clearable]="false"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['mobileCountryCode'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('mobileCountryCode')?.touched
+                    }"
+                  >
+                    <ng-option
+                      *ngFor="let country of countryCodes"
+                      [value]="country.valueWithPrefix"
+                    >
+                      {{ country.label }}[{{ country.valueWithPrefix }}]
+                    </ng-option>
+                  </ng-select>
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="
+                        bankeloInfoForm.get('mobileCountryCode')?.touched &&
+                        bankeloInfoForm
+                          .get('mobileCountryCode')
+                          ?.hasError('required')
+                      "
+                    >
+                      *Country required
+                    </p>
+                  </div>
+                </div>
+                <div class="col form-group">
+                  <label for="mobileNumber">Mobile</label>
+                  <input
+                    id="mobileNumber"
+                    type="text"
+                    class="form-control"
+                    placeholder="555-456-6666"
+                    formControlName="mobileNumber"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['mobileNumber'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('mobileNumber')?.touched
+                    }"
+                  />
+                  <div>
+                    <p
+                      class="validator"
+                      *ngIf="bankeloInfoForm.get('email')?.hasError('required')"
+                    >
+                      *Mobile required.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="businessDescription">Business Description</label>
+                  <textarea
+                    id="businessDescription"
+                    type="text"
+                    class="form-control"
+                    placeholder="businessDescription"
+                    formControlName="businessDescription"
+                  >
+                  </textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="bankelo_card">
+              <legend class="card-header">Postal Address</legend>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="addressLine1">Address</label>
+                  <textarea
+                    id="addressLine1"
+                    type="text"
+                    class="form-control"
+                    placeholder="Address"
+                    formControlName="addressLine1"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['addressLine1'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('addressLine1')?.touched
+                    }"
+                  ></textarea>
+                </div>
+                <div>
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm
+                        .get('addressLine1')
+                        ?.hasError('required') &&
+                      bankeloInfoForm.get('addressLine1')?.touched
+                    "
+                  >
+                    *Address required.
+                  </p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="postalCode">Postal Code</label>
+                  <input
+                    id="postalCode"
+                    type="text"
+                    class="form-control"
+                    placeholder="Postal Code"
+                    formControlName="postalCode"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['postalCode'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('postalCode')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('postalCode')?.hasError('required') &&
+                      bankeloInfoForm.get('postalCode')?.touched
+                    "
+                  >
+                    *Postal code required.
+                  </p>
+                </div>
+
+                <div class="col form-group">
+                  <label for="city">City</label>
+                  <input
+                    id="city"
+                    type="text"
+                    class="form-control"
+                    placeholder="City"
+                    formControlName="city"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['city'].hasError('required') &&
+                        bankeloInfoForm.get('city')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('city')?.hasError('required') &&
+                      bankeloInfoForm.get('city')?.touched
+                    "
+                  >
+                    *Postal code required.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col form-group">
+                  <label for="province">Province</label>
+                  <input
+                    id="province"
+                    type="text"
+                    class="form-control"
+                    placeholder="Province"
+                    formControlName="province"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['province'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('province')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('province')?.hasError('required') &&
+                      bankeloInfoForm.get('province')?.touched
+                    "
+                  >
+                    *Province required.
+                  </p>
+                </div>
+
+                <div class="col form-group">
+                  <label for="country">Country</label>
+                  <input
+                    id="country"
+                    type="text"
+                    class="form-control"
+                    placeholder="country"
+                    formControlName="country"
+                    [ngClass]="{
+                      error:
+                        bankeloInfoForm.controls['country'].hasError(
+                          'required'
+                        ) && bankeloInfoForm.get('country')?.touched
+                    }"
+                  />
+                  <p
+                    class="validator"
+                    *ngIf="
+                      bankeloInfoForm.get('country')?.hasError('required') &&
+                      bankeloInfoForm.get('country')?.touched
+                    "
+                  >
+                    *Country required.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col text-center">
+                <button
+                  class="btn btn-dark"
+                  [disabled]="bankeloInfoForm.invalid"
+                  data-bs-toggle="modal"
+                  data-bs-target="#bankelo"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- Bankelo Modal -->
+  <div class="container-fluid">
+    <div class="modal fade" id="bankelo" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to submit?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onCreateBenkelo()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- On Boarding modal -->
+  <div class="container-fluid">
+    <div class="modal fade" id="onBoarding" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to submit?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="onApplyForBuckzy()"
+            >
+              YES
+            </button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

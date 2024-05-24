@@ -1,0 +1,170 @@
+.bankelo_card {
+  border: 1px solid rgb(235, 223, 223);
+  border-radius: 1em;
+  margin: 2em 1em 1em;
+  padding: 0 1em 1em;
+}
+
+// legend{
+//   border-top: 1px solid black;
+//   border-bottom: 1px solid black;
+//   text-align: center;
+//   padding: 10px 0;
+// }
+
+.fieldset {
+  border: solid;
+  color: #353fff;
+  border-radius: 1em;
+  margin: 2em 1em 1em;
+  padding: 0 1em 1em;
+}
+
+legend {
+  transform: translatey(-50%);
+  width: max-content;
+  background: white;
+  padding: 0 0.15em;
+}
+
+.navbar {
+  font-size: 19px;
+  background-color: #f1eded;
+  position: fixed;
+  z-index: 999;
+  top: 0px;
+  ul {
+    border-bottom: none;
+    cursor: pointer;
+  }
+}
+.content {
+  position: relative !important;
+}
+.mt-15 {
+  margin-top: 15px !important;
+}
+.t-30 {
+  top: 30px !important;
+  margin-top: 48px;
+}
+
+.nav-link {
+  color: black;
+}
+
+.validator {
+  color: rgb(151, 12, 12);
+  font-size: 12px;
+  margin: 0px;
+}
+
+// .content {
+//   height: calc(100vh - 1px);
+//   // max-height: 94vh;
+// }
+
+.file_upload_label {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  padding-top: 20px;
+  color: #666363;
+}
+
+.navigation_btn {
+  cursor: pointer;
+  border: none;
+  font-size: 21px;
+  color: rgb(43, 36, 36);
+}
+.form-check-label {
+  margin-right: 5px !important;
+}
+.card {
+  margin-bottom: 20px;
+}
+.pb-10 {
+  padding-bottom: 20px !important;
+}
+
+legend {
+  font-size: 21px;
+  border-bottom: 2px solid rgb(231, 223, 223);
+  padding: 4px 0px;
+}
+.tenant_card_wrapper {
+  padding: 10px;
+  .row {
+    margin-bottom: 8px;
+    span {
+      color: rgb(78, 77, 77);
+      margin-right: 5px;
+    }
+    strong {
+      color: rgb(44, 42, 42);
+      font-weight: 400;
+    }
+  }
+  .card-header {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}
+i {
+  margin-right: 5px;
+  font-size: 16px;
+}
+.card-header {
+  padding-left: 0px !important;
+}
+
+.error {
+  border-color: #dc3545;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 1px #d45660;
+  border-radius: 5px;
+}
+
+.upload-btn-wrapper {
+  // top: 61px !important;
+  // position: absolute !important;
+  position: relative;
+  top: -11px;
+}
+
+
+.buckzy_container {
+  padding-right: 46px;
+  padding-top: 20px;
+}
+
+.sub_header{
+  font-size: 20px;
+}
+
+.W-50 {
+  width: 80%;
+}
+label{
+  color: gray;
+}
+
+.view-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+.btn:disabled{
+  pointer-events: auto;
+}
+
+.logo {
+  min-width: 80px;
+  max-width: 80px;
+  max-height: 40px;
+  min-height: 40px;
+ }
+
