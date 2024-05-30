@@ -85,4 +85,27 @@ export class TenantListComponent {
     this.pagination.page = 1;
     this.onFetchTenants();
   }
+
+  onExportBankelo() {
+    this._apiService
+      .get(API_CONSTANT.TENANT.EXPORT_BANKO_EXCEL, {
+        headers: {
+          responseType: 'arrayBuffer' as 'text',
+        },
+      })
+      .subscribe({
+        next: (_res: any) => {
+          let file = new Blob([_res], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+          var fileURL = URL.createObjectURL(file);
+          const a = document.createElement('a');
+          a.href = fileURL;
+          a.download = `bankelo-tenant-${new Date().getDate()}-${
+            new Date().getMonth() + 1
+          }-${new Date().getFullYear()}.xlsx`;
+          a.click();
+        },
+      });
+  }
 }

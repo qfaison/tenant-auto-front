@@ -16,8 +16,13 @@
       </select>
     </div>
   </div>
-  <div class="row justify-content-end mb-2">
-    <div class="col-auto">
+  <div class="row mb-3">
+    <div class="col">
+      <button class="btn btn-outline-primary" (click)="onExportBankelo()">
+        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Bankelo
+      </button>
+    </div>
+    <div class="col d-flex justify-content-end align-items-center">
       <div class="form-check">
         <input
           class="form-check-input"
@@ -32,6 +37,7 @@
       </div>
     </div>
   </div>
+
   <ng-container *ngIf="tenants.length; else noData">
     <table class="table">
       <thead>

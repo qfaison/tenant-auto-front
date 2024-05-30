@@ -2079,6 +2079,7 @@ export class TenantComponent {
   ];
   logoUrl = 'assets/vercado_small.png';
   action: string = 'create';
+  ASW: string = 'Y';
 
   constructor(
     private _fromBuilder: FormBuilder,
@@ -2267,6 +2268,7 @@ export class TenantComponent {
   }
 
   onCreateTenant() {
+    this.tenantCreateForm.value.AWS = this.ASW;
     this._apiService
       .post(API_CONSTANT.TENANT.CREATE, { body: this.tenantCreateForm.value })
       .subscribe({
@@ -2650,6 +2652,14 @@ export class TenantComponent {
       default:
         this.buildCreateTenantForm();
         break;
+    }
+  }
+
+  onCheckedASW($event: any) {
+    if ($event?.target?.value === 'aws') {
+      this.ASW = 'Y';
+    } else {
+      this.ASW = 'N';
     }
   }
 }

@@ -21,11 +21,12 @@ export class ApiService {
     });
   }
 
-  get(url: string, optional: { params?: any; query?: any }) {
+  get(url: string, optional: { params?: any; query?: any, headers?: any }) {
     return this._httpClient.get(
       `${this.BASE_URL}/${this.handleUrl(url, optional.params)}`,
       {
         params: optional.query,
+        responseType: optional?.headers?.responseType || 'json'
       }
     );
   }

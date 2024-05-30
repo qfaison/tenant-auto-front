@@ -20,10 +20,10 @@ export class HttpInterceptorHandler implements HttpInterceptor {
   ) {}
 
   intercept(
-    request: HttpRequest<unknown>,
+    request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let headers = new HttpHeaders();
+    let headers = request.headers;
     if (request.url.includes('bonanzaconnect.com')) {
       headers = headers.append('Authorization', 'bearer test123');
     } else {
