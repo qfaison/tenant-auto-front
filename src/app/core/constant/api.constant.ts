@@ -11,7 +11,7 @@ export const API_CONSTANT = {
     ADD_CONSTRAINTS: 'tenant/add/constraints',
     RESTART: 'restart/tenant',
     FETCH_WITH_PAGINATION: 'tenants/fetch',
-    EXPORT_BANKO_EXCEL: 'bankelo/export_excel'
+    EXPORT_BANKO_EXCEL: 'bankelo/tenant/export_excel'
   },
   BONANZA_CONNECT: {
     CREATE_TENANT: 'bonanzaconnect/create/tenant',
