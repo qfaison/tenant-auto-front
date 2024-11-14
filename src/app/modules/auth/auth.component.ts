@@ -36,7 +36,7 @@ export class AuthComponent {
       .post(API_CONSTANT.USER.LOGIN, { body: this.loginForm.value })
       .subscribe((res: any) => {
         this._storageService.setToken(res.body);
-        this._router.navigate(['tenant/setup/create']);
+        this._router.navigate(['tenant/list']);
       });
   }
 }

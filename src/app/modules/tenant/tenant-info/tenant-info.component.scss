@@ -35,3 +35,12 @@ label {
 .nav-link{
   color: black !important
 }
+.nav-link:hover{
+  background-color: #f3f6fa;
+  font-weight: bold;
+}
+
+.active{
+  background: #cce0fc!important;
+  font-weight: bold;
+}
