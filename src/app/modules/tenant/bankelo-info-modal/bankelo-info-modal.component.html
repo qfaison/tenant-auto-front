@@ -1,0 +1,198 @@
+<!-- Modal Header -->
+
+<!-- Modal Body -->
+<div class="modal-body custom-scrollbar">
+  <!-- Information Section Rows -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-person-lines-fill me-1"></i>Legal Name:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.legalName || 'NA' }}</p>
+    </div>
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-card-text me-1"></i>External ID:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.externalId || 'NA' }}</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-file-earmark-post me-1"></i>Registration Number:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.registrationNumber || 'NA' }}</p>
+    </div>
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-caret-right-square me-1"></i>Side:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.side || 'NA' }}</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-building me-1"></i>Organization Type:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.organizationType || 'NA' }}</p>
+    </div>
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-graph-up me-1"></i>Industry:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.industry || 'NA' }}</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-briefcase me-1"></i>Line of Business:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.lineOfBusiness || 'NA' }}</p>
+    </div>
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="bi bi-card-checklist me-1"></i>Tax Id:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.taxId || 'NA' }}</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="fa fa-globe me-1"></i>Country of Operation:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.countryOfOperation || 'NA' }}</p>
+    </div>
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="fa fa-globe me-1"></i>Country of Registration:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.countryOfRegistration || 'NA' }}</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="fa fa-globe me-1"></i>Currency Code:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.currencyCode || "NA" }}</p>
+    </div>
+    <div class="col-md-6">
+      <strong class="text-muted">
+        <i class="fa fa-snapchat me-1"></i> Website:
+      </strong>
+      <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.website || "NA" }}</p>
+    </div>
+  </div>
+
+  <!-- Billing Address Section -->
+  <h6 class="d-flex align-items-center mt-4">
+    <i class="bi bi-map me-1"></i>Billing Address
+  </h6>
+  <div class="mb-3">
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <strong class="text-muted">
+          <i class="fa fa-map-marker me-1"></i> Address:
+        </strong>
+        <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.addressLine1 || "NA" }}</p>
+      </div>
+      <div class="col-md-6">
+        <strong class="text-muted">
+          <i class="fa fa-envelope me-1"></i> Postal Code:
+        </strong>
+        <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.postalCode || "NA" }}</p>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <strong class="text-muted">
+          <i class="fa fa-building me-1"></i> City:
+        </strong>
+        <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.city || "NA" }}</p>
+      </div>
+      <div class="col-md-6">
+        <strong class="text-muted">
+          <i class="fa fa-map me-1"></i> Province:
+        </strong>
+        <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.province || "NA" }}</p>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <strong class="text-muted">
+          <i class="fa fa-globe me-1"></i> Country:
+        </strong>
+        <p class="mb-0 text-info">{{ selectedTenant?.bankelo?.country || "NA" }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Documents Section -->
+  <h6 class="d-flex align-items-center mt-4">
+    <i class="bi bi-file-earmark-pdf me-1"></i>Documents
+  </h6>
+  <div *ngIf="selectedTenant?.bankelo?.documents?.length > 0; else noDocuments">
+    <div class="row">
+      <div class="col-md-6 mb-3" *ngFor="let document of selectedTenant?.bankelo?.documents">
+        <div class="card p-2 rounded">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <strong class="d-block">
+                <i class="bi bi-file-earmark me-1"></i>{{ document.label || 'Untitled' }}
+              </strong>
+              Document Number: <small class="text-muted" title="Document Number">{{ document.identifier || 'NA'
+                }}</small>
+            </div>
+            <div>
+              <button class="btn btn-outline-dark me-1 btn-sm" (click)="onDownloadDocument(document.url)">
+                <!-- <a [href]="document.url" target="_blank" *ngIf="document.url" class="btn btn-link btn-sm">
+                </a> -->VIEW
+              </button>
+              <button class="btn btn-outline-dark btn-sm" (click)="onSubmitDocumentForApproval(document.type)"
+                [disabled]="document.id || !selectedTenant.bankelo?.id">
+                Sumbit for approval
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noDocuments>
+    <p class="text-muted">No documents available</p>
+  </ng-template>
+</div>
+
+<ng-template #restartModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-center w-100">
+      <i class="bi bi-info-circle-fill me-1"></i>Confirmation
+    </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="lead text-muted">
+      Are you sure you want to submit this request for approval? This action will initiate the approval process.
+    </p>
+    <p class="small text-warning">
+      Please review your request carefully before submitting it for approval.
+    </p>
+  </div>
+  <div class="modal-footer justify-content-center">
+    <button type="button" class="btn btn-dark btn-lg" (click)="onSubmitForApproval()">
+      <i class="bi bi-check-circle me-1"></i> Yes, Submit
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-lg" (click)="modal.dismiss('Close click')">
+      <i class="bi bi-x-circle me-1"></i> No, Cancel
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,36 @@
+/* Adding hover effect on document download button */
+.btn-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Ensuring uniform padding for rows */
+.row {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Styling for the document section */
+.list-group-item {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.text-muted {
+  font-size: 15px;
+  font-weight: 500;
+  color: black !important;
+
+}
+
+.text-info {
+  font-weight: 400 !important;
+  color: #333 !important;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.modal-header {
+  background-color: #f8f8f8;
+}
+

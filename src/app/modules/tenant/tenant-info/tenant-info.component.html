@@ -1,0 +1,443 @@
+<div class="content mt-4">
+  <!-- Tenant Information Card -->
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <div class="row">
+        <div class="col d-flex-col">
+          <i class="fa fa-arrow-left back-button-icon" aria-hidden="true" (click)="onNavigateBack()"></i>
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Tenant Details</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- Tenant Details Tabs -->
+      <ul class="nav nav-tabs" id="tenantDetailsTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="tenant-tab" data-bs-toggle="tab" href="#tenant" role="tab"
+            aria-controls="tenant" aria-selected="true">
+            <i class="bi bi-info-circle"></i> Tenant
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="custom-domain-tab" data-bs-toggle="tab" href="#custom-domain" role="tab"
+            aria-controls="custom-domain" aria-selected="false">
+            <i class="bi bi-globe"></i> Custom Domain
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="bonanza-connect-tab" data-bs-toggle="tab" href="#bonanza-connect" role="tab"
+            aria-controls="bonanza-connect" aria-selected="false">
+            <i class="bi bi-link-45deg"></i> Bonanza Connect
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="bankelo-tab" data-bs-toggle="tab" href="#bankelo" role="tab" aria-controls="bankelo"
+            aria-selected="false">
+            <i class="bi bi-bank"></i> Bankelo
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ghl-tab" data-bs-toggle="tab" href="#ghl" role="tab" aria-controls="ghl"
+            aria-selected="false">
+            <i class="bi bi-gear-fill"></i> GHL
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="apple-verification-tab" data-bs-toggle="tab" href="#apple-verification" role="tab"
+            aria-controls="apple-verification" aria-selected="false">
+            <i class="bi bi-apple"></i> Apple Verification
+          </a>
+        </li>
+
+      </ul>
+
+      <!-- Tab Content -->
+      <div class="tab-content mt-3" id="tenantDetailsTabContent">
+        <!-- Tenant Tab -->
+        <div class="tab-pane fade show active" id="tenant" role="tabpanel" aria-labelledby="tenant-tab">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-6">
+                  <h6>Tenant {{tenant.tenantName}} Information</h6>
+                </div>
+                <div class="col-6 text-end">
+                  <div class="dropdown">
+                    <button class="btn btn-sm dropdown-toggle" type="button" id="actionsDropdown"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Tenant Action
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
+                      <li><button class="dropdown-item" (click)="onOpenConfirmationModal('PUBLIC',publicModal)">
+                          <i class="fa fa-globe me-1" aria-hidden="true"></i> Make Public</button>
+                      </li>
+                      <li><button class="dropdown-item" (click)="onOpenConfirmationModal('PRIVATE',privateModal)">
+                          <i class="fa fa-lock me-1" aria-hidden="true"></i> Make Private</button>
+                      </li>
+                      <li><button class="dropdown-item" (click)="onOpenConfirmationModal('STOP', stopModal)">
+                          <i class="fa fa-stop-circle me-1" aria-hidden="true"></i> Stop</button>
+                      </li>
+                      <li><button class="dropdown-item" (click)="onOpenConfirmationModal('RESTART',restartModal)">
+                          <i class="fa fa-refresh me-1" aria-hidden="true"></i> Restart</button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Tenant-specific content goes here -->
+              <app-tenant-detail-modal [selectedTenant]="tenant"></app-tenant-detail-modal>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bankelo Tab -->
+        <div class="tab-pane fade" id="bankelo" role="tabpanel" aria-labelledby="bankelo-tab">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-6">
+
+                  <h6 class="card-title">Tenant {{tenant.tenantName}} Bankelo Information</h6>
+                </div>
+                <!-- [disabled]="
+                !tenant.bankelo ||
+                tenant.bankelo.status ===
+                  'SUBMITTED_FOR_CUSTOMER'" -->
+                <div class="col-6 text-end">
+                  <button class="btn btn-outline-dark btn-sm border-0"
+                    (click)="onOpenConfirmationModal('BANKELO_APPROVAL',bankeloConfirmation)">
+                    <i class="bi bi-check-circle me-1"></i> Submit for Approval
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <ng-container *ngIf="tenant.bankelo?.externalId; else noBankeloData;">
+                <app-bankelo-info-modal [selectedTenant]="tenant"></app-bankelo-info-modal>
+              </ng-container>
+              <ng-template #noBankeloData>
+                <div class="row">
+                  <div class="col text-center"><span>Data not found.</span></div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <!-- GHL Tab -->
+        <div class="tab-pane fade" id="ghl" role="tabpanel" aria-labelledby="ghl-tab">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-6">
+
+                  <h6 class="card-title">Tenant {{tenant.tenantName}} GHL Information</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <ng-container *ngIf="tenant.GHL?.companyId; else noGHLData;">
+                <app-ghl-info-modal></app-ghl-info-modal>
+              </ng-container>
+              <ng-template #noGHLData>
+                <div class="row">
+                  <div class="col text-center
+                  "><span>Data not found.</span></div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apple Verification Tab -->
+        <div class="tab-pane fade" id="apple-verification" role="tabpanel" aria-labelledby="apple-verification-tab">
+          <div class="card">
+            <div class="card-header">
+              <h6 class="card-title">Tenant {{tenant.tenantName}} Apple Verification File Upload</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <label for="appleVerification" class="form-label d-flex align-items-center">
+                    <i class="bi bi-file-earmark-code-fill"></i> Apple Verification File <span
+                      class="text-danger">*</span>
+                  </label>
+                  <input type="file" class="form-control" [formControl]="appleVerFile"
+                    (change)="onChangeAppldeVerFile($event)" id="appleVerification" />
+                  <p class="text-danger small mt-1" *ngIf="appleVerFile?.touched && appleVerFile?.errors?.['required']">
+                    *Apple Verification File is required
+                  </p>
+                </div>
+              </div>
+              <div class="rowm mt-4">
+                <div class="col text-center">
+                  <button type="button" class="btn btn-outline-dark btn-sm py-2 w-10" (click)="onUploadAppleVerFile()"
+                    title="Please ensure that the file is correct before uploading.">
+                    <i class="bi bi-save-fill me-1"></i>Upload
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Domain Tab -->
+        <div class="tab-pane fade" id="custom-domain" role="tabpanel" aria-labelledby="custom-domain-tab">
+          <div class="card">
+            <div class="card-header">
+              <h6 class="card-title">Tenant {{tenant.tenantName}} Update Custom Domain</h6>
+            </div>
+            <div class="card-body">
+              <div class="modal-body">
+                <form [formGroup]="tenantUpdateForm" class="p-3">
+                  <div class="row">
+                    <div class="col-6">
+                      <!-- Tenant ID -->
+                      <div class="mb-4">
+                        <label for="tenantId" class="form-label  d-flex align-items-center">
+                          <i class="bi bi-person-fill me-1"></i> Tenant ID <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" id="tenantId" class="form-control" placeholder="Enter tenant ID"
+                          formControlName="tenantId" readonly [ngClass]="{
+                            'is-invalid': tenantUpdateForm.get('tenantId')?.touched && tenantUpdateForm.get('tenantId')?.invalid
+                          }" />
+                        <p class="text-danger small mt-1"
+                          *ngIf="tenantUpdateForm.get('tenantId')?.touched && tenantUpdateForm.get('tenantId')?.errors?.['required']">
+                          *Tenant ID is required
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- Custom Domain -->
+                      <div class="mb-4">
+                        <label for="customDomain" class="form-label  d-flex align-items-center">
+                          <i class="bi bi-globe me-1"></i> Custom Domain <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" id="customDomain" class="form-control" placeholder="Enter custom domain name"
+                          formControlName="customDomain" [ngClass]="{
+                            'is-invalid': tenantUpdateForm.get('customDomain')?.touched && tenantUpdateForm.get('customDomain')?.invalid
+                          }" />
+                        <p class="text-danger small mt-1"
+                          *ngIf="tenantUpdateForm.get('customDomain')?.touched && tenantUpdateForm.get('customDomain')?.errors?.['required']">
+                          *Custom domain name is required
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <!-- SSL Certificate -->
+                      <div class="mb-4">
+                        <label for="sslCertificate" class="form-label  d-flex align-items-center">
+                          <i class="bi bi-shield-lock-fill me-1"></i> SSL Certificate <span class="text-danger">*</span>
+                        </label>
+                        <input type="file" class="form-control" formControlName="sslCertificate"
+                          (change)="onFileChangeSsl($event)" />
+                        <p class="text-danger small mt-1"
+                          *ngIf="tenantUpdateForm.get('sslCertificate')?.touched && tenantUpdateForm.get('sslCertificate')?.errors?.['required']">
+                          *SSL Certificate is required
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <!-- Private Key -->
+                      <div class="mb-4">
+                        <label for="privateKey" class="form-label  d-flex align-items-center">
+                          <i class="bi bi-key-fill me-1"></i> Private Key <span class="text-danger">*</span>
+                        </label>
+                        <input type="file" class="form-control" formControlName="privateKey"
+                          (change)="onFileChangeKey($event)" />
+                        <p class="text-danger small mt-1"
+                          *ngIf="tenantUpdateForm.get('privateKey')?.touched && tenantUpdateForm.get('privateKey')?.errors?.['required']">
+                          *Private Key is required
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <!-- Bundle (Optional) -->
+                      <div class="mb-4">
+                        <label for="bundle" class="form-label  d-flex align-items-center">
+                          <i class="bi bi-archive-fill me-1"></i> Bundle (Optional)
+                        </label>
+                        <input type="file" class="form-control" formControlName="bundle"
+                          (change)="onFileChangeBundle($event)" />
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- Submit Button -->
+                  <div class="row">
+                    <div class="col-12 text-center">
+                      <button type="button" class="btn btn-dark w-10 py-2"
+                        title="Please verify that the data is correct before submitting." (click)="onUpdateTenant();">
+                        <i class="bi bi-save-fill me-1"></i> Update
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bonanza Connect Tab -->
+        <div class="tab-pane fade" id="bonanza-connect" role="tabpanel" aria-labelledby="bonanza-connect-tab">
+          <div class="card">
+            <div class="card-header">
+              <h6 class="card-title">Tenant {{tenant.tenantName}} Bonanza Connect Information</h6>
+            </div>
+            <div class="card-body">
+              <ng-container *ngIf="tenant?.bonanzaConnect?.email; else bonanzaDataNotFound;">
+                <div class="row">
+                  <div class="col-md-6">
+                    <span><i class="fa fa-envelope tenant-icon" aria-hidden="true"></i> Email:</span>
+                    <strong>{{ tenant?.bonanzaConnect?.email || "NA" }}</strong>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #bonanzaDataNotFound>
+                <div class="row">
+                  <div class="col text-center">
+                    <span>Data not found.</span>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Bankelo Confirmation Modal -->
+<ng-template #bankeloConfirmation let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title w-100">
+      <i class="bi bi-info-circle-fill me-1"></i>Confirmation
+    </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="lead text-muted">
+      Are you sure you want to submit this request for approval? This action will initiate the approval process.
+    </p>
+    <p class="small text-warning">
+      Please review your request carefully before submitting it for approval.
+    </p>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button type="button" class="btn btn-dark btn-ls" (click)="onApplyForBuckzy()">
+      <i class="bi bi-check-circle me-1"></i> Yes, Submit
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-ls" (click)="modal.dismiss('Close click')">
+      <i class="bi bi-x-circle me-1"></i> No, Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #publicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title w-100"><i class="bi bi-info-circle-fill me-1"></i>Confirm Public Access</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="lead text-muted">
+      Are you sure you want to make this item public? Once made public, it will be visible to everyone.
+    </p>
+    <p class="small text-warning">
+      Please review your decision carefully before proceeding.
+    </p>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button type="button" class="btn btn-dark btn-sm" (click)="onMakePublic(); modal.close()">
+      <i class="bi bi-check-circle me-1"></i> Yes, Make Public
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-sm" (click)="modal.dismiss('Close click')">
+      <i class="bi bi-x-circle me-1"></i> No, Cancel
+    </button>
+  </div>
+</ng-template>
+
+
+<ng-template #privateModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title w-100"> <i class="bi bi-info-circle-fill me-1"></i>Confirm Private Access</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="lead text-muted">
+      Are you sure you want to make this item private? Once made private, it will no longer be visible to the public.
+    </p>
+    <p class="small text-warning">
+      Please review your decision carefully before proceeding.
+    </p>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button type="button" class="btn btn-dark btn-sm" (click)="onMakePrivate(); modal.close()">
+      <i class="bi bi-check-circle me-1"></i> Yes, Make Private
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-sm" (click)="modal.dismiss('Close click')">
+      <i class="bi bi-x-circle me-1"></i> No, Cancel
+    </button>
+  </div>
+</ng-template>
+
+
+<ng-template #stopModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title w-100"> <i class="bi bi-info-circle-fill me-1"></i> Confirm Stop</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="lead text-muted">
+      Are you sure you want to stop this tenant's access? Once stopped, the tenant will no longer have access to the
+      system.
+    </p>
+    <p class="small text-warning">
+      Please review your decision carefully before proceeding.
+    </p>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button type="button" class="btn btn-dark btn-sm" (click)="onStopTenant()">
+      <i class="bi bi-check-circle me-1"></i> Yes, Stop
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-sm" (click)="modal.dismiss('Close click')">
+      <i class="bi bi-x-circle me-1"></i> No, Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #restartModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title w-100"> <i class="bi bi-info-circle-fill me-1"></i>Confirm Restart</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="lead text-muted">
+      Are you sure you want to start this tenant? This action will enable their services and make them active again.
+    </p>
+    <p class="small text-warning">
+      Please review your decision carefully before proceeding.
+    </p>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button type="button" class="btn btn-dark btn-sm" (click)="onRestartTenant(); modal.close()">
+      <i class="bi bi-check-circle me-1"></i> Yes, Restart
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-sm" (click)="modal.dismiss('Close click')">
+      <i class="bi bi-x-circle me-1"></i> No, Cancel
+    </button>
+  </div>
+</ng-template>

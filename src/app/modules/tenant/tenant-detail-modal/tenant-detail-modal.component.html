@@ -1,0 +1,68 @@
+<div class="modal-body">
+  <div class="tenant-card-wrapper">
+
+    <!-- Tenant General Info Section -->
+    <div class="info-card">
+      <div class="row">
+        <div class="col-md-6">
+          <span><i class="fa fa-user tenant-icon" aria-hidden="true"></i> Tenant Name:</span>
+          <strong>{{ selectedTenant?.tenantName || "NA" }}</strong>
+        </div>
+        <div class="col-md-6">
+          <span><i class="fa fa-id-badge tenant-icon" aria-hidden="true"></i> Tenant ID:</span>
+          <strong>{{ selectedTenant?.tenantId }}</strong>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <span><i class="fa fa-cogs tenant-icon" aria-hidden="true"></i> Custom Domain:</span>
+          <strong>{{ selectedTenant?.customDomain || "N/A" }}</strong>
+        </div>
+        <div class="col-md-6">
+          <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Domain:</span>
+          <strong>{{ selectedTenant?.domainName }}</strong>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <span><i class="fa fa-link tenant-icon" aria-hidden="true"></i> Ws2 Url:</span>
+          <strong>
+            <a [href]="'https://' + selectedTenant?.ws2Url" target="_blank">
+              {{ selectedTenant?.ws2Url || "N/A" }}
+            </a>
+          </strong>
+        </div>
+        <div class="col-md-6">
+          <span><i class="fa fa-link tenant-icon" aria-hidden="true"></i> Erp Url:</span>
+          <strong>
+            <a [href]="'https://' + selectedTenant?.erpUrl" target="_blank">
+              {{ selectedTenant?.erpUrl || "N/A" }}
+            </a>
+          </strong>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <span><i class="fa fa-envelope tenant-icon" aria-hidden="true"></i> Email:</span>
+          <strong>{{ selectedTenant?.email || "NA" }}</strong>
+        </div>
+        <div class="col-md-6">
+          <span><i class="fa fa-server tenant-icon" aria-hidden="true"></i> IP Address:</span>
+          <strong>{{ selectedTenant?.ipAddress || "N/A" }}</strong>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <span><i class="fa fa-server tenant-icon" aria-hidden="true"></i> IPN Url:</span>
+          <strong class="iPinUrl">
+            <a [href]="selectedTenant?.ipnUrl" target="_blank">{{ selectedTenant?.ipnUrl || "N/A" }}</a>
+          </strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -30,7 +30,6 @@ export class ToastService {
     });
   }
   showError(message: string) {
-    console.log(message)
     this.show(message, {
       classname: "bg-danger text-light",
       delay: 5000,

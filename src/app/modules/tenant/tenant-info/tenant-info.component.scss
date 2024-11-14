@@ -1,0 +1,37 @@
+.content {
+  position: relative !important;
+  top: 38px;
+  margin: 12px;
+  min-width: 92vh !important;
+  height: 92vh;
+}
+
+.w-10 {
+  width: 10% !important;
+}
+label {
+  font-weight: 500;
+}
+
+.d-flex-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.back-button-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.lead{
+  font-size: 16px !important;
+}
+
+.nav-link{
+  color: black !important
+}

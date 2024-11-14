@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationStart,
+  Router,
+} from '@angular/router';
 import { APP_CONSTANT } from 'src/app/core/constant/app.constant';
 
 @Component({
@@ -10,12 +15,11 @@ import { APP_CONSTANT } from 'src/app/core/constant/app.constant';
 export class NavbarComponent {
   logoUrl = 'assets/vercado_small.png';
   isBonanzaConnect: boolean = false;
-  isTenantTab: boolean = false;
+  isTenantTab: boolean = true;
   isGHL: boolean = false;
 
-  constructor(
-    private _router: Router
-  ) {
+  constructor(private _router: Router) {
+    this.setActiveTab(this._router.url);
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.setActiveTab(event.url);
@@ -35,17 +39,16 @@ export class NavbarComponent {
       this.isBonanzaConnect = true;
       this.isGHL = false;
       this.isTenantTab = false;
-    } 
-    if (identifier.includes('tenant')) {
+    }
+    if (identifier.includes('tenant/list')) {
       this.isTenantTab = true;
       this.isGHL = false;
-      this.isTenantTab = false;
-    } 
-    if(identifier.includes('ghl')){
+      this.isBonanzaConnect = false;
+    }
+    if (identifier.includes('ghl')) {
       this.isGHL = true;
       this.isTenantTab = false;
       this.isBonanzaConnect = false;
-
     }
   }
 }

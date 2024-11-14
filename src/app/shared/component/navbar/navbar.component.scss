@@ -169,3 +169,35 @@ legend {
 .logout_ul {
   margin-left: auto;
 }
+
+.navbar {
+  font-size: 18px;
+  background-color: #f1eded;
+  position: fixed;
+  z-index: 999;
+  top: 0px;
+  padding: 0px;
+  // height: 52px;
+  padding-top: 3px;
+  padding-bottom: 1px;
+  ul {
+    border-bottom: none;
+    cursor: pointer;
+  }
+}
+
+
+/* Apply hover effect to the tab links */
+.nav-item a {
+  color: black; /* Set the default color of the tab link */
+  text-decoration: none; /* Remove underline by default */
+  transition: color 0.3s; /* Add transition for smooth color change */
+}
+
+.nav-item a:hover {
+  background-color: #e2dddd; /* Change the background color on hover */
+}
+
+.active{
+  background: linear-gradient(90deg, #ffffff 0%, #5f9adb 227.15%) !important;
+}

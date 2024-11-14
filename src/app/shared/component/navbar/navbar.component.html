@@ -15,58 +15,17 @@
       <li>
         <img src="{{ logoUrl }}" class="logo" alt="Bonanza logo" />
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item">
         <a
-          class="nav-link dropdown-toggle"
+          class="nav-link"
+          id="contact-tab"
           ngClass="{{ isTenantTab ? 'active' : '' }}"
-          id="home-tab"
           data-toggle="tab"
           role="tab"
-          aria-controls="home"
-          aria-selected="true"
-          id="navbarDropdownMenuLink"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          ><i class="fa fa-users" aria-hidden="true"></i>Tenant</a
+          aria-selected="false"
+          routerLink="tenant/list"
+          ><i class="fa fa-cube" aria-hidden="true"></i>Tenant</a
         >
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <li>
-            <a class="dropdown-item" routerLink="tenant/list"
-              ><i class="fa fa-list" aria-hidden="true"></i>List</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="tenant/setup/create"
-              ><i class="fa fa-plus-circle" aria-hidden="true"></i>Create</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="tenant/setup/update"
-              ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="tenant/setup/public"
-              ><i class="fa fa-share-square-o" aria-hidden="true"></i>Public</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="tenant/setup/private"
-              ><i class="fa fa-lock" aria-hidden="true"></i>Private</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="tenant/setup/stop"
-              ><i class="fa fa-ban" aria-hidden="true"></i>Stop</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="tenant/setup/restart"
-              ><i class="fa fa-refresh" aria-hidden="true"></i>Restart</a
-            >
-          </li>
-        </ul>
       </li>
       <li class="nav-item">
         <a

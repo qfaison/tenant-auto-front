@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TenantComponent } from './tenant.component';
 import { TenantListComponent } from './tenant-list/tenant-list.component';
 import { TenantDetailComponent } from './tenant-detail/tenant-detail.component';
+import { TenantInfoComponent } from './tenant-info/tenant-info.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'detail',
     component: TenantDetailComponent,
+  },
+  {
+    path: 'detail/:tenantId',
+    component: TenantInfoComponent,
   },
 ];
 @NgModule({

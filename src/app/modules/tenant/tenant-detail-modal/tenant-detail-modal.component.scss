@@ -1,0 +1,75 @@
+/* Modal Styling */
+.modal-header {
+  background-color: #f8f8f8;
+}
+
+.tenant-card-wrapper {
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.section-header {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  color: #333;
+}
+
+
+
+.info-card .row {
+  margin-bottom: 0.75rem;
+}
+
+.info-card span {
+  color: #0c0b0b;
+  font-weight: 500;
+  margin-right: 4px;
+  font-size: 15px;
+}
+
+.info-card strong {
+  display: inline-block;
+  font-weight: 400 !important;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Icons */
+.tenant-icon,
+.bonanza-connect-icon,
+.bankelo-icon {
+  color: black;
+  margin-right: 2px;
+}
+
+.close {
+  font-size: 1.5rem;
+}
+
+.modal-body {
+  padding: 0px !important;
+}
+
+.tenantId {
+  font-weight: 300;
+  font-size: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .info-card .row > div {
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-size: 1.15rem;
+  }
+}
+
+.iPinUrl{
+  color: rgb(0, 89, 255) !important;
+}

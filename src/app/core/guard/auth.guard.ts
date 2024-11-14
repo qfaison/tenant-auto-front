@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     if (route.routeConfig?.path === APP_CONSTANT.ROUTES.USER.LOGIN) {
       /* Login routes this block executeds */
       if (this._storageService.getToken()) {
-        this._router.navigate(['tenant/setup/create'], {
+        this._router.navigate(['tenant/list'], {
           replaceUrl: true,
         });
         return false;

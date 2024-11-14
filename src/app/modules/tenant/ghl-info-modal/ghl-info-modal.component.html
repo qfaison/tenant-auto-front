@@ -1,0 +1,195 @@
+<div class="modal-body">
+  <div class="tenant-card-wrapper bg-white">
+    <!-- GHL Info Section -->
+    <div class="section">
+      <div class="info-card">
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-info-circle" aria-hidden="true"></i> Name:</span>
+            <strong>{{ selectedTenant?.GHL?.name || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-info-circle" aria-hidden="true"></i> Company Id:</span>
+            <strong>{{ selectedTenant?.GHL?.companyId || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Address:</span>
+            <strong>{{ selectedTenant?.GHL?.address || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-city" aria-hidden="true"></i> City:</span>
+            <strong>{{ selectedTenant?.GHL?.city || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-flag" aria-hidden="true"></i> State:</span>
+            <strong>{{ selectedTenant?.GHL?.state || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-globe" aria-hidden="true"></i> Country:</span>
+            <strong>{{ selectedTenant?.GHL?.country || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-mail-bulk" aria-hidden="true"></i> Postal Code:</span>
+            <strong>{{ selectedTenant?.GHL?.postalCode || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-clock" aria-hidden="true"></i> Time Zone:</span>
+            <strong>{{ selectedTenant?.GHL?.timezone || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-link" aria-hidden="true"></i> Website:</span>
+            <strong>{{ selectedTenant?.GHL?.website || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-camera-retro" aria-hidden="true"></i> Snapshot Id:</span>
+            <strong>{{ selectedTenant?.GHL?.snapshotId || "NA" }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prospect Info Section -->
+    <div class="section">
+      <div class="section-header">
+        <i class="tenant-icon fa fa-user"></i>
+        <span class="section-title">Prospect</span>
+      </div>
+      <div class="info-card">
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-user" aria-hidden="true"></i> First Name:</span>
+            <strong>{{ selectedTenant?.GHL?.prospectInfo?.firstName || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-user" aria-hidden="true"></i> Last Name:</span>
+            <strong>{{ selectedTenant?.GHL?.prospectInfo?.lastName || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-envelope" aria-hidden="true"></i> Email:</span>
+            <strong>{{ selectedTenant?.GHL?.prospectInfo?.email || "NA" }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="section">
+      <div class="section-header">
+        <i class="tenant-icon fa fa-cogs"></i>
+        <span class="section-title">Settings</span>
+      </div>
+      <div class="info-card">
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-cogs" aria-hidden="true"></i> Allow Duplicate Contact:</span>
+            <strong>{{ selectedTenant?.GHL?.settings?.allowDuplicateContact || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-cogs" aria-hidden="true"></i> Allow Duplicate Opportunity:</span>
+            <strong>{{ selectedTenant?.GHL?.settings?.allowDuplicateOpportunity || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-cogs" aria-hidden="true"></i> Allow Facebook Name Merge:</span>
+            <strong>{{ selectedTenant?.GHL?.settings?.allowFacebookNameMerge || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-cogs" aria-hidden="true"></i> Disable Contact Timezone:</span>
+            <strong>{{ selectedTenant?.GHL?.settings?.disableContactTimezone || "NA" }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Links Section -->
+    <div class="section">
+      <div class="section-header">
+        <i class="tenant-icon fa fa-share-alt"></i>
+        <span class="section-title">Social Links</span>
+      </div>
+      <div class="info-card">
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-facebook" aria-hidden="true"></i> Facebook:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.facebookUrl || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-google-plus" aria-hidden="true"></i> Google Plus:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.googlePlus || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-linkedin" aria-hidden="true"></i> LinkedIn:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.linkedIn || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-twitter" aria-hidden="true"></i> Twitter:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.twitter || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-yelp" aria-hidden="true"></i> Yelp:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.yelp || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-instagram" aria-hidden="true"></i> Instagram:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.instagram || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-youtube" aria-hidden="true"></i> YouTube:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.youtube || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-pinterest" aria-hidden="true"></i> Pinterest:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.pinterest || "NA" }}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-rss" aria-hidden="true"></i> Blog RSS:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.blogRss || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-google" aria-hidden="true"></i> Google PlacesId:</span>
+            <strong>{{ selectedTenant?.GHL?.social?.googlePlacesId || "NA" }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Twilio Info Section -->
+    <div class="section">
+      <div class="section-header">
+        <i class="tenant-icon fa fa-phone"></i>
+        <span class="section-title">Twilio Info</span>
+      </div>
+      <div class="info-card">
+        <div class="row">
+          <div class="col">
+            <span><i class="fa fa-phone-square" aria-hidden="true"></i> SID:</span>
+            <strong>{{ selectedTenant?.GHL?.twilio?.sid || "NA" }}</strong>
+          </div>
+          <div class="col">
+            <span><i class="fa fa-key" aria-hidden="true"></i> Auth Token:</span>
+            <strong>{{ selectedTenant?.GHL?.twilio?.authToken || "NA" }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

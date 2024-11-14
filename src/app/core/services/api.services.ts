@@ -9,12 +9,12 @@ export class ApiService {
   BASE_URL = `${environment.BASE_URL}/api`;
   constructor(private _httpClient: HttpClient) {}
 
-  post(url: string, optional: { body: any; query?: any, includeBaseUrl?: boolean }) {
+  post(url: string, optional: { body: any; query?: any, includeBaseUrl?: boolean, header?: any }) {
     if(!optional.includeBaseUrl){
       url = `${this.BASE_URL}/${url}`
     }
     return this._httpClient.post(url, optional.body, {
-      params: optional.query,
+      headers: optional.header
       // headers: {
       //   'Content-Type': 'multipart/form-data'
       // }
