@@ -65,6 +65,7 @@
               <th scope="col">Tenant Name</th>
               <th scope="col">Custom Domain</th>
               <th scope="col">Email</th>
+              <th scope="col">Cancel Request</th>
               <th scope="col" class="text-end">Benkelo Onboarding</th>
               <!-- <th scope="col">Detail</th>
               <th scope="col">Bankelo</th>
@@ -80,6 +81,16 @@
                 <td>{{ tenant?.tenantName }}</td>
                 <td>{{ tenant?.customDomain || "NA" }}</td>
                 <td>{{ tenant?.email || "NA" }}</td>
+                <td>
+                  <span *ngIf="tenant?.cancelRequestStatus; else noStatus" class="badge"
+                    class="{{tenant.cancelRequestStatus === 'APPROVED' ? 'bg-success' : 'bg-warning'}}">
+                    {{ tenant?.cancelRequestStatus }}
+                  </span>
+                  <ng-template #noStatus>
+                    <span class="badge bg-secondary">NA</span>
+                  </ng-template>
+                </td>
+
                 <td class="text-end">
                   <ng-container
                     *ngIf="tenant?.bankelo?.status === 'SUBMITTED_FOR_CUSTOMER' || tenant?.bankelo?.status === 'SUBMITTED_FOR_PARTY'">

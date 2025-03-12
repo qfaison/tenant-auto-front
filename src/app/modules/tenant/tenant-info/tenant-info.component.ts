@@ -130,6 +130,11 @@ export class TenantInfoComponent {
           centered: true,
         });
         break;
+      case 'APPROVE_CANCEL_REQ':  
+      this._modalService.open(modalTemplate, {
+        centered: true,
+      });
+      break;
     }
   }
 
@@ -242,5 +247,17 @@ export class TenantInfoComponent {
 
   onNavigateBack() {
     history.back()
+  }
+
+  onApproveCancelRequest() {
+    this._apiService
+      .post(`${API_CONSTANT.TENANT.APPROVE_CANCEL_REQUEST}/${this.tenant.tenantId}/approve`, {body: {}})
+      .subscribe({
+        next: (res: any) => {
+          this._toastService.showSuccess(
+            res.message || res.response?.message || MESSAGE_CONSTANT.TENANT.STOP
+          );
+        },
+      });
   }
 }
