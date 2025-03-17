@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-tenant-detail-modal',
@@ -8,9 +7,24 @@ import { Component, Input } from '@angular/core';
 })
 export class TenantDetailModalComponent {
   @Input() selectedTenant: any;
+  @Output() onApproveCancelRequest: EventEmitter<void> =
+    new EventEmitter<void>();
 
+  @Output() onHandleWebbhook: EventEmitter<void> = new EventEmitter<void>();
 
-  onCloseModal() {
+  @Output() onHandleAccounts: EventEmitter<void> = new EventEmitter<void>();
 
+  onCloseModal() {}
+
+  approveCancelRequest() {
+    this.onApproveCancelRequest.emit();
+  }
+
+  handleWebhook() {
+    this.onHandleWebbhook.emit();
+  }
+
+  handleAccounts() {
+    this.onHandleAccounts.emit();
   }
 }

@@ -83,9 +83,9 @@
                       <li><button class="dropdown-item" (click)="onOpenConfirmationModal('RESTART',restartModal)">
                           <i class="fa fa-refresh me-1" aria-hidden="true"></i> Restart</button>
                       </li>
-                      <li *ngIf="tenant.cancelRequestStatus ==='ON-HOLD'"><button class="dropdown-item" (click)="onOpenConfirmationModal('APPROVE_CANCEL_REQ', approveCancelReq)">
+                      <!-- <li *ngIf="tenant.cancelRequestStatus ==='ON-HOLD'"><button class="dropdown-item" (click)="onOpenConfirmationModal('APPROVE_CANCEL_REQ', approveCancelReq)">
                         <i class="fa fa-check me-1" aria-hidden="true"></i> Approve Cancel Request</button>
-                    </li>
+                    </li> -->
                     </ul>
                   </div>
                 </div>
@@ -93,7 +93,10 @@
             </div>
             <div class="card-body">
               <!-- Tenant-specific content goes here -->
-              <app-tenant-detail-modal [selectedTenant]="tenant"></app-tenant-detail-modal>
+              <app-tenant-detail-modal [selectedTenant]="tenant"
+                (onApproveCancelRequest)="onOpenConfirmationModal('APPROVE_CANCEL_REQ', approveCancelReq)"
+                (onHandleWebbhook)="onHandleWebbhook()"
+                (onHandleAccounts)="onHandleAccounts()"></app-tenant-detail-modal>
             </div>
           </div>
         </div>
@@ -447,7 +450,7 @@
 
 <ng-template #approveCancelReq let-modal>
   <div class="modal-header">
-    <h5 class="modal-title w-100"> <i class="bi bi-info-circle-fill me-1"></i>Confirm Restart</h5>
+    <h5 class="modal-title w-100"> <i class="bi bi-info-circle-fill me-1"></i>Confirm Approval</h5>
     <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
   </div>
   <div class="modal-body text-center">
@@ -457,6 +460,12 @@
     </p>
     <p class="small text-warning">
       Please review your decision carefully before proceeding.
+    </p>
+    <p class="small text-warning">
+      TenantId: {{tenant.tenantId}}
+    </p>
+    <p class="small text-warning">
+      Email: {{tenant.email || 'N/A'}}
     </p>
   </div>
   <div class="modal-footer justify-content-end">

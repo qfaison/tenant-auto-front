@@ -13,7 +13,9 @@ export const API_CONSTANT = {
     FETCH_WITH_PAGINATION: 'tenants/fetch',
     EXPORT_BANKO_EXCEL: 'bankelo/tenant/export_excel',
     APPLE_VERIFICATION_FILE_UPLOAD: 'apple/verification/file/upload',
-    APPROVE_CANCEL_REQUEST: 'tenant/cancel_request'
+    CANCEL_REQUEST: 'tenant/cancel_request',
+    QA3_CANCEL_REQUEST: 'tenant/qa3_cancel_request',
+
   },
   BONANZA_CONNECT: {
     CREATE_TENANT: 'bonanzaconnect/create/tenant',

@@ -104,6 +104,7 @@ export class TenantInfoComponent {
   onSubmitForApproval() {}
 
   onOpenConfirmationModal(modalName: string, modalTemplate: any) {
+    console.log('test');
     switch (modalName) {
       case 'BANKELO_APPROVAL':
         this._modalService.open(modalTemplate, {
@@ -130,11 +131,11 @@ export class TenantInfoComponent {
           centered: true,
         });
         break;
-      case 'APPROVE_CANCEL_REQ':  
-      this._modalService.open(modalTemplate, {
-        centered: true,
-      });
-      break;
+      case 'APPROVE_CANCEL_REQ':
+        this._modalService.open(modalTemplate, {
+          centered: true,
+        });
+        break;
     }
   }
 
@@ -179,7 +180,7 @@ export class TenantInfoComponent {
       .post(API_CONSTANT.TENANT.STOP, {
         body: {
           tenantId: this.tenant.tenantId,
-          apiKey: this.tenant.api
+          apiKey: this.tenant.api,
         },
       })
       .subscribe({
@@ -246,12 +247,15 @@ export class TenantInfoComponent {
   }
 
   onNavigateBack() {
-    history.back()
+    history.back();
   }
 
   onApproveCancelRequest() {
     this._apiService
-      .post(`${API_CONSTANT.TENANT.APPROVE_CANCEL_REQUEST}/${this.tenant.tenantId}/approve`, {body: {}})
+      .post(
+        `${API_CONSTANT.TENANT.CANCEL_REQUEST}/${this.tenant.tenantId}/approve`,
+        { body: {} }
+      )
       .subscribe({
         next: (res: any) => {
           this._toastService.showSuccess(
@@ -259,5 +263,36 @@ export class TenantInfoComponent {
           );
         },
       });
+  }
+
+  onHandleWebbhook() {
+    console.log("webhook")
+    this._apiService
+    .post(
+      `${API_CONSTANT.TENANT.QA3_CANCEL_REQUEST}/${this.tenant.tenantId}/initiate`,
+      { body: {} }
+    )
+    .subscribe({
+      next: (res: any) => {
+        this._toastService.showSuccess(
+          res.message || res.response?.message || MESSAGE_CONSTANT.TENANT.STOP
+        );
+      },
+    });
+  }
+
+  onHandleAccounts() {
+    this._apiService
+    .post(
+      `${API_CONSTANT.TENANT.QA3_CANCEL_REQUEST}/${this.tenant.tenantId}/approve`,
+      { body: {} }
+    )
+    .subscribe({
+      next: (res: any) => {
+        this._toastService.showSuccess(
+          res.message || res.response?.message || MESSAGE_CONSTANT.TENANT.STOP
+        );
+      },
+    });
   }
 }

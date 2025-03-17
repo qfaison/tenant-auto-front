@@ -62,6 +62,51 @@
             <a [href]="selectedTenant?.ipnUrl" target="_blank">{{ selectedTenant?.ipnUrl || "N/A" }}</a>
           </strong>
         </div>
+        <!-- <div class="col-md-6">
+          <span
+            ><i class="fa fa-globe tenant-icon" aria-hidden="true"></i>Cancel Request Status:
+          </span>
+          <strong>{{ selectedTenant.cancelRequestStatus || "NA" }}</strong>
+        </div> -->
+      </div>
+
+      <div class="row" style="display: flex;
+          flex-wrap: nowrap;
+          align-items: center;
+          height: 24px;
+          margin-bottom: 12px;">
+
+        <div class="col-md-6 col-sm-12">
+          <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Cancel Request Status:</span>
+          <span *ngIf="selectedTenant?.cancelRequestStatus; else noStatus" class="badge"
+            [ngClass]="selectedTenant.cancelRequestStatus === 'APPROVED' ? 'bg-success' : 'bg-warning'">
+            {{ selectedTenant?.cancelRequestStatus }}
+          </span>
+          <ng-template #noStatus>
+            <span class="badge bg-secondary">NA</span>
+          </ng-template>
+        </div>
+
+        <div class="col-md-6 col-sm-12 d-flex flex-wrap gap-2">
+          <button class="btn btn-dark btn-sm" (click)="approveCancelRequest()">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Approve Cancel Request
+          </button>
+          <button class="btn btn-dark btn-sm" (click)="handleWebhook()">
+            <i class="fa fa-globe" aria-hidden="true"></i> Webhook
+          </button>
+          <button class="btn btn-dark btn-sm" (click)="handleAccounts()">
+            <i class="fa fa-user" aria-hidden="true"></i> Cancel Accounts
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <span><i class="fa fa-comment tenant-icon" aria-hidden="true"></i> Cancel Request Reason:</span>
+          <span>
+            {{ selectedTenant?.cancelRequestReason || 'NA'}}
+          </span>
+        </div>
       </div>
     </div>
   </div>
