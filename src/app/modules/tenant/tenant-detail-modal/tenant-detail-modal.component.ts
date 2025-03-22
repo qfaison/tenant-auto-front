@@ -14,6 +14,12 @@ export class TenantDetailModalComponent {
 
   @Output() onHandleAccounts: EventEmitter<void> = new EventEmitter<void>();
 
+  @Input() webhookBaseUrl: string = '';
+
+  isEditing: boolean = false;
+
+  @Output() onUpdateWebhook: EventEmitter<string> = new EventEmitter<string>();
+
   onCloseModal() {}
 
   approveCancelRequest() {
@@ -26,5 +32,13 @@ export class TenantDetailModalComponent {
 
   handleAccounts() {
     this.onHandleAccounts.emit();
+  }
+
+  toggleEdit() {
+    console.log(this.webhookBaseUrl)
+    this.isEditing = !this.isEditing;
+    if (!this.isEditing) {
+      this.onUpdateWebhook.emit(this.webhookBaseUrl);
+    }
   }
 }

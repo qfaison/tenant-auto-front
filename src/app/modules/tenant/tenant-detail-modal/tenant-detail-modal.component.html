@@ -85,6 +85,14 @@
           <ng-template #noStatus>
             <span class="badge bg-secondary">NA</span>
           </ng-template>
+
+          <!-- <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Cancel Request Status:</span> -->
+          <span *ngIf="selectedTenant?.billingStatus; else billed" class="badge bg-warning">
+            {{ selectedTenant?.cancelRequestStatus }}
+          </span>
+          <ng-template #billed>
+            <span class="badge bg-success">BILLING</span>
+          </ng-template>
         </div>
 
         <div class="col-md-6 col-sm-12 d-flex flex-wrap gap-2">
@@ -108,6 +116,24 @@
           </span>
         </div>
       </div>
+
+      <div class="row mt-4">
+        <div class="col-md-2">
+          <span>
+            <i class="fa fa-comment tenant-icon" aria-hidden="true"></i> Webhook configure:
+          </span>
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" [(ngModel)]="webhookBaseUrl" [disabled]="!isEditing" style="width: 100%;">
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-dark btn-sm ms-4" (click)="toggleEdit()">
+            {{ isEditing ? 'UPDATE' : 'EDIT' }}
+          </button>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </div>

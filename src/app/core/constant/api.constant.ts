@@ -29,4 +29,8 @@ export const API_CONSTANT = {
     ONBOARDING: 'bankelo/onboarding',
     ONBOARDING_DOCUMENT: 'bankelo/onboarding/create_document_with_file',
   },
+  WEBHOOK: {
+    CREATE_UPDATE: 'webhook/baseurl/createUpdate',
+    FETCH: 'webhook/baseurl/fetch',
+  }
 };

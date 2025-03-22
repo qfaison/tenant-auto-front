@@ -95,7 +95,9 @@
               <!-- Tenant-specific content goes here -->
               <app-tenant-detail-modal [selectedTenant]="tenant"
                 (onApproveCancelRequest)="onOpenConfirmationModal('APPROVE_CANCEL_REQ', approveCancelReq)"
+                [webhookBaseUrl]="webhookBaseUrl"
                 (onHandleWebbhook)="onHandleWebbhook()"
+                (onUpdateWebhook)="onUpdateWebhook($event)"
                 (onHandleAccounts)="onHandleAccounts()"></app-tenant-detail-modal>
             </div>
           </div>

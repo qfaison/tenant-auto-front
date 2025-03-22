@@ -26,6 +26,7 @@ export class TenantInfoComponent {
   appleVerFile: FormControl = new FormControl('', Validators.required);
   tenantCreateForm!: FormGroup;
   domains: Array<string> = ['vercado.com', 'enterprisehub.io'];
+  webhookBaseUrl: string = '';
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -39,6 +40,7 @@ export class TenantInfoComponent {
       tenantId: this.tenant?.tenantId,
       customDomain: this.tenant?.customDomain || '',
     });
+    this.onFetchWebhook();
   }
 
   buildUpdateTenantForm() {
@@ -266,32 +268,54 @@ export class TenantInfoComponent {
   }
 
   onHandleWebbhook() {
-    console.log("webhook")
+    console.log('webhook');
     this._apiService
-    .post(
-      `${API_CONSTANT.TENANT.QA3_CANCEL_REQUEST}/${this.tenant.tenantId}/initiate`,
-      { body: {} }
-    )
-    .subscribe({
-      next: (res: any) => {
-        this._toastService.showSuccess(
-          res.message || res.response?.message || MESSAGE_CONSTANT.TENANT.STOP
-        );
-      },
-    });
+      .post(
+        `${API_CONSTANT.TENANT.QA3_CANCEL_REQUEST}/${this.tenant.tenantId}/initiate`,
+        { body: {} }
+      )
+      .subscribe({
+        next: (res: any) => {
+          this._toastService.showSuccess(
+            res.message || res.response?.message || MESSAGE_CONSTANT.TENANT.STOP
+          );
+        },
+      });
   }
 
   onHandleAccounts() {
     this._apiService
-    .post(
-      `${API_CONSTANT.TENANT.QA3_CANCEL_REQUEST}/${this.tenant.tenantId}/approve`,
-      { body: {} }
-    )
-    .subscribe({
+      .post(
+        `${API_CONSTANT.TENANT.QA3_CANCEL_REQUEST}/${this.tenant.tenantId}/approve`,
+        { body: {} }
+      )
+      .subscribe({
+        next: (res: any) => {
+          this._toastService.showSuccess(
+            res.message || res.response?.message || MESSAGE_CONSTANT.TENANT.STOP
+          );
+        },
+      });
+  }
+
+  onUpdateWebhook(baseUrl: string) {
+    this._apiService
+      .post(`${API_CONSTANT.WEBHOOK.CREATE_UPDATE}`, {
+        body: {
+          baseUrl: baseUrl,
+        },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this._toastService.showSuccess(res.message);
+        },
+      });
+  }
+
+  onFetchWebhook() {
+    this._apiService.get(`${API_CONSTANT.WEBHOOK.FETCH}`, {}).subscribe({
       next: (res: any) => {
-        this._toastService.showSuccess(
-          res.message || res.response?.message || MESSAGE_CONSTANT.TENANT.STOP
-        );
+        this.webhookBaseUrl = res.body?.baseUrl
       },
     });
   }
