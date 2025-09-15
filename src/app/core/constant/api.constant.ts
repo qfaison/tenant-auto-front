@@ -15,6 +15,8 @@ export const API_CONSTANT = {
     APPLE_VERIFICATION_FILE_UPLOAD: 'apple/verification/file/upload',
     CANCEL_REQUEST: 'tenant/cancel_request',
     QA3_CANCEL_REQUEST: 'tenant/qa3_cancel_request',
+    WELCOM_EMAIL_SEND: 'tenant/welcome/email/send',
+    UPDATE_EMAIL: 'tenant/email/update'
 
   },
   BONANZA_CONNECT: {

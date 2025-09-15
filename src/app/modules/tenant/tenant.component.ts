@@ -21,7 +21,7 @@ export class TenantComponent {
   tenantCreateForm!: FormGroup;
   tenantUpdateForm!: FormGroup;
   tenantStopForm!: FormGroup;
-  domains: Array<string> = ['vercado.com', 'enterprisehub.io'];
+  domains: Array<string> = ['bcomm.app', 'enterprisehub.io'];
   isCreateTenant: boolean = true;
   isUpdateTenant: boolean = false;
   isStopTenant: boolean = false;
@@ -2274,7 +2274,7 @@ export class TenantComponent {
       .subscribe({
         next: (res: any) => {
           this.tenantCreateForm.reset();
-          this.selectedDomain = 'vercado.com';
+          this.selectedDomain = 'bcomm.app';
           this._toastService.showSuccess(
             res.message ||
               res.response?.message ||

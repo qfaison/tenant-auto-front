@@ -46,8 +46,13 @@
 
       <div class="row">
         <div class="col-md-6">
-          <span><i class="fa fa-envelope tenant-icon" aria-hidden="true"></i> Email:</span>
+          <span>
+            <i class="fa fa-envelope tenant-icon" aria-hidden="true"></i> Email:
+          </span>
           <strong>{{ selectedTenant?.email || "NA" }}</strong>
+          <button class="btn btn-dark btn-sm ms-4" (click)="openEmailUpdateModal(updateEmailModal)">
+            Update
+          </button>
         </div>
         <div class="col-md-6">
           <span><i class="fa fa-server tenant-icon" aria-hidden="true"></i> IP Address:</span>
@@ -132,8 +137,89 @@
           </button>
         </div>
       </div>
-
-
     </div>
   </div>
 </div>
+
+<ng-template #updateEmailModal let-modal>
+  <form #emailForm="ngForm" novalidate>
+    <div class="modal-header bg-light px-4 py-3">
+      <h5 class="modal-title w-100 fw-bold">
+        <i class="bi bi-envelope-paper-fill me-2 text-primary"></i>
+        Update Email
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        (click)="modal.dismiss('Cross click')"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    <!-- ✅ Added padding -->
+    <div class="modal-body px-4 py-3">
+      <p class="small text-muted mb-4">
+        Update the email for tenant:
+        <span class="badge bg-secondary ms-1">
+          {{ selectedTenant.tenantName }}
+        </span>
+      </p>
+
+      <div class="mb-4">
+        <label for="emailInput" class="form-label fw-semibold">
+          <i class="bi bi-at me-1 text-primary"></i> Email
+        </label>
+        <input
+          id="emailInput"
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="editedEmail"
+          #emailCtrl="ngModel"
+          required
+          email
+          placeholder="Enter email..."
+        />
+
+        <!-- Validation messages -->
+        <div
+          *ngIf="emailCtrl.invalid && emailCtrl.touched"
+          class="text-danger small mt-2"
+        >
+          <div *ngIf="emailCtrl.errors?.['required']">
+            <i class="bi bi-exclamation-circle me-1"></i> Email is required.
+          </div>
+          <div *ngIf="emailCtrl.errors?.['email']">
+            <i class="bi bi-exclamation-circle me-1"></i> Please enter a valid
+            email.
+          </div>
+        </div>
+
+        <div class="form-text mt-1 text-muted">
+          We’ll use this email for tenant communication.
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Added padding -->
+    <div class="modal-footer px-4 py-3 bg-light">
+      <button
+        type="button"
+        class="btn btn-outline-danger btn-sm"
+        (click)="modal.dismiss('Close click')"
+      >
+        <i class="bi bi-x-circle me-1"></i> Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-dark btn-sm"
+        [disabled]="emailForm.invalid"
+        (click)="updateEmail();"
+      >
+        <i class="bi bi-check-circle me-1"></i> Submit
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+

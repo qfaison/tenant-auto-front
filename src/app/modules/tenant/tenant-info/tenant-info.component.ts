@@ -25,7 +25,7 @@ export class TenantInfoComponent {
   selectedDomain: string = '';
   appleVerFile: FormControl = new FormControl('', Validators.required);
   tenantCreateForm!: FormGroup;
-  domains: Array<string> = ['vercado.com', 'enterprisehub.io'];
+  domains: Array<string> = ['bcomm.app', 'enterprisehub.io'];
   webhookBaseUrl: string = '';
 
   constructor(
@@ -105,8 +105,43 @@ export class TenantInfoComponent {
 
   onSubmitForApproval() {}
 
+  onSendWelcomEmail() {
+    this._apiService
+      .post(API_CONSTANT.TENANT.WELCOM_EMAIL_SEND, {
+        body: { tenantId: this.tenant.tenantId },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this._toastService.showSuccess(
+            res.message ||
+              res.response?.message ||
+              MESSAGE_CONSTANT.TENANT.WELCOME_EMAIL_SEND
+          );
+        },
+      });
+  }
+
+    onUpdateEmail(email: string) {
+    this._apiService
+      .post(API_CONSTANT.TENANT.UPDATE_EMAIL, {
+        body: { tenantId: this.tenant.tenantId, email  },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.tenant.email = email;
+          this._toastService.showSuccess(
+            res.message ||
+              res.response?.message ||
+              MESSAGE_CONSTANT.TENANT.EMAIL_UPDATED_SUCCESSFULLY
+          );
+          this._modalService.dismissAll();
+          
+        },
+      });
+  }
+
+
   onOpenConfirmationModal(modalName: string, modalTemplate: any) {
-    console.log('test');
     switch (modalName) {
       case 'BANKELO_APPROVAL':
         this._modalService.open(modalTemplate, {

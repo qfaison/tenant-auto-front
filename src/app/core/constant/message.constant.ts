@@ -6,6 +6,9 @@ export const MESSAGE_CONSTANT = {
     RESTART: 'Tenant Successfuly restarted!',
     REMOVE_CONSTRAINTS: 'Constraints Successfully removed',
     ADD_CONSTRAINTS: 'Tenant make private successfully.',
+    WELCOME_EMAIL_SEND: 'Welcome email sent successfully.',
+    EMAIL_UPDATED_SUCCESSFULLY: 'Email updated successfully.'
+    
   },
   BONANZA_CONNECT: {
     CREATE_TENANT: 'Tenant Successfully Created!',

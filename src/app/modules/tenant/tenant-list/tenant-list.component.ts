@@ -43,7 +43,7 @@ export class TenantListComponent {
   @ViewChild('updateTenantModal') updateTenantModal!: ElementRef;
   appleDevFile: FormControl = new FormControl('', Validators.required);
   tenantCreateForm!: FormGroup;
-  domains: Array<string> = ['vercado.com', 'enterprisehub.io'];
+  domains: Array<string> = ['bcomm.app', 'enterprisehub.io'];
 
   constructor(
     private _apiService: ApiService,
@@ -312,7 +312,7 @@ export class TenantListComponent {
       .subscribe({
         next: (res: any) => {
           this.tenantCreateForm.reset();
-          this.selectedDomain = 'vercado.com';
+          this.selectedDomain = 'bcomm.app';
           this._toastService.showSuccess(
             res.message ||
               res.response?.message ||

@@ -83,6 +83,16 @@
                       <li><button class="dropdown-item" (click)="onOpenConfirmationModal('RESTART',restartModal)">
                           <i class="fa fa-refresh me-1" aria-hidden="true"></i> Restart</button>
                       </li>
+                      <li>
+                        <span [title]="!tenant?.email ? 'No email available for this tenant' : ''"
+                          class="d-inline-block"
+                          [ngStyle]="{ cursor: !tenant?.email ? 'not-allowed' : 'pointer' }">
+                          <button class="dropdown-item" (click)="onSendWelcomEmail()"
+                            [disabled]="!tenant?.email">
+                            <i class="fa fa-paper-plane me-1"></i> Send Welcome Mail
+                          </button>
+                        </span>
+                      </li>
                       <!-- <li *ngIf="tenant.cancelRequestStatus ==='ON-HOLD'"><button class="dropdown-item" (click)="onOpenConfirmationModal('APPROVE_CANCEL_REQ', approveCancelReq)">
                         <i class="fa fa-check me-1" aria-hidden="true"></i> Approve Cancel Request</button>
                     </li> -->
@@ -95,10 +105,9 @@
               <!-- Tenant-specific content goes here -->
               <app-tenant-detail-modal [selectedTenant]="tenant"
                 (onApproveCancelRequest)="onOpenConfirmationModal('APPROVE_CANCEL_REQ', approveCancelReq)"
-                [webhookBaseUrl]="webhookBaseUrl"
-                (onHandleWebbhook)="onHandleWebbhook()"
-                (onUpdateWebhook)="onUpdateWebhook($event)"
-                (onHandleAccounts)="onHandleAccounts()"></app-tenant-detail-modal>
+                [webhookBaseUrl]="webhookBaseUrl" (onHandleWebbhook)="onHandleWebbhook()"
+                (onUpdateWebhook)="onUpdateWebhook($event)" (onHandleAccounts)="onHandleAccounts()"
+                (onUpdateEmail)="onUpdateEmail($event)"></app-tenant-detail-modal>
             </div>
           </div>
         </div>
