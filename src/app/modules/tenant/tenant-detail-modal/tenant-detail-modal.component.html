@@ -15,15 +15,48 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <span><i class="fa fa-cogs tenant-icon" aria-hidden="true"></i> Custom Domain:</span>
           <strong>{{ selectedTenant?.customDomain || "N/A" }}</strong>
+        </div> -->
+        <div class="col-md-6">
+          <span>
+            <i class="fa fa-cogs tenant-icon" aria-hidden="true"></i> Custom Domain:
+          </span>
+          <strong>{{ selectedTenant?.customDomain || "N/A" }}</strong>
+
+          <!-- Show button only if a valid customDomain exists -->
+          <span ngbTooltip="{{ getSSLTooltip() }}" container="body">
+            <button class="btn btn-dark btn-sm ms-4" [disabled]="isSSLSetupDisabled()" (click)="setupSSL()">
+              <i class="fa fa-lock"></i> Setup SSL
+            </button>
+          </span>
         </div>
         <div class="col-md-6">
           <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Domain:</span>
           <strong>{{ selectedTenant?.domainName }}</strong>
         </div>
       </div>
+
+
+      <div class="row" *ngIf="selectedTenant?.sslIssuedAt || selectedTenant?.sslExpiryDate">
+        <div class="col-md-6 mb-2">
+          <span>
+            <i class="bi bi-calendar-check me-2"></i>
+            <strong>SSL Issued Date:</strong>&nbsp;
+            {{ selectedTenant?.sslIssuedAt ? (selectedTenant.sslIssuedAt | date:'MMM d, y, h:mm a') : 'N/A' }}
+          </span>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <span >
+            <i class="bi bi-calendar-x me-2"></i>
+            <strong>SSL Expiry Date:</strong>&nbsp;
+            {{ selectedTenant?.sslExpiryDate ? (selectedTenant.sslExpiryDate | date:'MMM d, y, h:mm a') : 'N/A' }}
+          </span>
+        </div>
+      </div>
+
 
       <div class="row">
         <div class="col-md-6">
@@ -148,12 +181,7 @@
         <i class="bi bi-envelope-paper-fill me-2 text-primary"></i>
         Update Email
       </h5>
-      <button
-        type="button"
-        class="btn-close"
-        (click)="modal.dismiss('Cross click')"
-        aria-label="Close"
-      ></button>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
     </div>
 
     <!-- ✅ Added padding -->
@@ -169,23 +197,11 @@
         <label for="emailInput" class="form-label fw-semibold">
           <i class="bi bi-at me-1 text-primary"></i> Email
         </label>
-        <input
-          id="emailInput"
-          type="email"
-          class="form-control"
-          name="email"
-          [(ngModel)]="editedEmail"
-          #emailCtrl="ngModel"
-          required
-          email
-          placeholder="Enter email..."
-        />
+        <input id="emailInput" type="email" class="form-control" name="email" [(ngModel)]="editedEmail"
+          #emailCtrl="ngModel" required email placeholder="Enter email..." />
 
         <!-- Validation messages -->
-        <div
-          *ngIf="emailCtrl.invalid && emailCtrl.touched"
-          class="text-danger small mt-2"
-        >
+        <div *ngIf="emailCtrl.invalid && emailCtrl.touched" class="text-danger small mt-2">
           <div *ngIf="emailCtrl.errors?.['required']">
             <i class="bi bi-exclamation-circle me-1"></i> Email is required.
           </div>
@@ -203,23 +219,12 @@
 
     <!-- ✅ Added padding -->
     <div class="modal-footer px-4 py-3 bg-light">
-      <button
-        type="button"
-        class="btn btn-outline-danger btn-sm"
-        (click)="modal.dismiss('Close click')"
-      >
+      <button type="button" class="btn btn-outline-danger btn-sm" (click)="modal.dismiss('Close click')">
         <i class="bi bi-x-circle me-1"></i> Cancel
       </button>
-      <button
-        type="submit"
-        class="btn btn-dark btn-sm"
-        [disabled]="emailForm.invalid"
-        (click)="updateEmail();"
-      >
+      <button type="submit" class="btn btn-dark btn-sm" [disabled]="emailForm.invalid" (click)="updateEmail();">
         <i class="bi bi-check-circle me-1"></i> Submit
       </button>
     </div>
   </form>
 </ng-template>
-
-

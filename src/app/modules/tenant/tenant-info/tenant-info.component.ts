@@ -121,10 +121,10 @@ export class TenantInfoComponent {
       });
   }
 
-    onUpdateEmail(email: string) {
+  onUpdateEmail(email: string) {
     this._apiService
       .post(API_CONSTANT.TENANT.UPDATE_EMAIL, {
-        body: { tenantId: this.tenant.tenantId, email  },
+        body: { tenantId: this.tenant.tenantId, email },
       })
       .subscribe({
         next: (res: any) => {
@@ -135,11 +135,9 @@ export class TenantInfoComponent {
               MESSAGE_CONSTANT.TENANT.EMAIL_UPDATED_SUCCESSFULLY
           );
           this._modalService.dismissAll();
-          
         },
       });
   }
-
 
   onOpenConfirmationModal(modalName: string, modalTemplate: any) {
     switch (modalName) {
@@ -350,8 +348,22 @@ export class TenantInfoComponent {
   onFetchWebhook() {
     this._apiService.get(`${API_CONSTANT.WEBHOOK.FETCH}`, {}).subscribe({
       next: (res: any) => {
-        this.webhookBaseUrl = res.body?.baseUrl
+        this.webhookBaseUrl = res.body?.baseUrl;
       },
     });
+  }
+
+  onSetupSSL() {
+    this._apiService
+      .post(`${API_CONSTANT.TENANT.SETUP_SSH}`, {
+        body: {
+          tenantId: this.tenant?.tenantId,
+        },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this._toastService.showSuccess(res.message);
+        },
+      });
   }
 }
