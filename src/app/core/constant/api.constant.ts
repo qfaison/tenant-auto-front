@@ -17,7 +17,8 @@ export const API_CONSTANT = {
     QA3_CANCEL_REQUEST: 'tenant/qa3_cancel_request',
     WELCOM_EMAIL_SEND: 'tenant/welcome/email/send',
     UPDATE_EMAIL: 'tenant/email/update',
-    SETUP_SSH: 'tenant/ssl/setup'
+    SETUP_SSH: 'tenant/ssl/setup',
+    UPDATE_THREEPL: 'tenant/3pl/update',
 
   },
   BONANZA_CONNECT: {

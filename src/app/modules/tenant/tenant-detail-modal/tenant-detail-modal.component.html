@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-md-6 mb-2">
-          <span >
+          <span>
             <i class="bi bi-calendar-x me-2"></i>
             <strong>SSL Expiry Date:</strong>&nbsp;
             {{ selectedTenant?.sslExpiryDate ? (selectedTenant.sslExpiryDate | date:'MMM d, y, h:mm a') : 'N/A' }}
@@ -93,82 +93,101 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <span><i class="fa fa-server tenant-icon" aria-hidden="true"></i> IPN Url:</span>
-          <strong class="iPinUrl">
-            <a [href]="selectedTenant?.ipnUrl" target="_blank">{{ selectedTenant?.ipnUrl || "N/A" }}</a>
+      <div class="row align-items-center">
+        <!-- IPN URL -->
+        <div class="col-md-6">
+          <span>
+            <i class="fa fa-server tenant-icon" aria-hidden="true"></i>
+            IPN URL:
+          </span>
+          <strong class="iPinUrl ms-1">
+            <a *ngIf="selectedTenant?.ipnUrl; else noUrl" [href]="selectedTenant.ipnUrl" target="_blank">
+              {{ selectedTenant.ipnUrl }}
+            </a>
+            <ng-template #noUrl>N/A</ng-template>
           </strong>
         </div>
-        <!-- <div class="col-md-6">
-          <span
-            ><i class="fa fa-globe tenant-icon" aria-hidden="true"></i>Cancel Request Status:
-          </span>
-          <strong>{{ selectedTenant.cancelRequestStatus || "NA" }}</strong>
-        </div> -->
+
+        <!-- 3PL Radio Buttons -->
+        <div class="col-md-6 d-flex align-items-center justify-content-start gap-3">
+          <span class="fw-semibold">3PL:</span>
+
+          <div class="form-check">
+            <label class="form-check-label" for="threePLY">Y</label>
+            <input class="form-check-input" type="radio" name="threePL" id="threePLY" value="Y"
+              [(ngModel)]="selectedTenant.threePL" (change)="on3PLChange('Y', threePLConfirmModal)" />
+          </div>
+
+          <div class="form-check">
+            <label class="form-check-label" for="threePLN">N</label>
+            <input class="form-check-input" type="radio" name="threePL" id="threePLN" value="N"
+              [(ngModel)]="selectedTenant.threePL" (change)="on3PLChange('N', threePLConfirmModal)" />
+          </div>
+        </div>
       </div>
 
-      <div class="row" style="display: flex;
+    </div>
+
+    <div class="row" style="display: flex;
           flex-wrap: nowrap;
           align-items: center;
           height: 24px;
           margin-bottom: 12px;">
 
-        <div class="col-md-6 col-sm-12">
-          <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Cancel Request Status:</span>
-          <span *ngIf="selectedTenant?.cancelRequestStatus; else noStatus" class="badge"
-            [ngClass]="selectedTenant.cancelRequestStatus === 'APPROVED' ? 'bg-success' : 'bg-warning'">
-            {{ selectedTenant?.cancelRequestStatus }}
-          </span>
-          <ng-template #noStatus>
-            <span class="badge bg-secondary">NA</span>
-          </ng-template>
+      <div class="col-md-6 col-sm-12">
+        <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Cancel Request Status:</span>
+        <span *ngIf="selectedTenant?.cancelRequestStatus; else noStatus" class="badge"
+          [ngClass]="selectedTenant.cancelRequestStatus === 'APPROVED' ? 'bg-success' : 'bg-warning'">
+          {{ selectedTenant?.cancelRequestStatus }}
+        </span>
+        <ng-template #noStatus>
+          <span class="badge bg-secondary">NA</span>
+        </ng-template>
 
-          <!-- <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Cancel Request Status:</span> -->
-          <span *ngIf="selectedTenant?.billingStatus; else billed" class="badge bg-warning">
-            {{ selectedTenant?.cancelRequestStatus }}
-          </span>
-          <ng-template #billed>
-            <span class="badge bg-success">BILLING</span>
-          </ng-template>
-        </div>
-
-        <div class="col-md-6 col-sm-12 d-flex flex-wrap gap-2">
-          <button class="btn btn-dark btn-sm" (click)="approveCancelRequest()">
-            <i class="fa fa-check-circle" aria-hidden="true"></i> Approve Cancel Request
-          </button>
-          <button class="btn btn-dark btn-sm" (click)="handleWebhook()">
-            <i class="fa fa-globe" aria-hidden="true"></i> Webhook
-          </button>
-          <button class="btn btn-dark btn-sm" (click)="handleAccounts()">
-            <i class="fa fa-user" aria-hidden="true"></i> Cancel Accounts
-          </button>
-        </div>
+        <!-- <span><i class="fa fa-globe tenant-icon" aria-hidden="true"></i> Cancel Request Status:</span> -->
+        <span *ngIf="selectedTenant?.billingStatus; else billed" class="badge bg-warning">
+          {{ selectedTenant?.cancelRequestStatus }}
+        </span>
+        <ng-template #billed>
+          <span class="badge bg-success">BILLING</span>
+        </ng-template>
       </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <span><i class="fa fa-comment tenant-icon" aria-hidden="true"></i> Cancel Request Reason:</span>
-          <span>
-            {{ selectedTenant?.cancelRequestReason || 'NA'}}
-          </span>
-        </div>
+      <div class="col-md-6 col-sm-12 d-flex flex-wrap gap-2">
+        <button class="btn btn-dark btn-sm" (click)="approveCancelRequest()">
+          <i class="fa fa-check-circle" aria-hidden="true"></i> Approve Cancel Request
+        </button>
+        <button class="btn btn-dark btn-sm" (click)="handleWebhook()">
+          <i class="fa fa-globe" aria-hidden="true"></i> Webhook
+        </button>
+        <button class="btn btn-dark btn-sm" (click)="handleAccounts()">
+          <i class="fa fa-user" aria-hidden="true"></i> Cancel Accounts
+        </button>
       </div>
+    </div>
 
-      <div class="row mt-4">
-        <div class="col-md-2">
-          <span>
-            <i class="fa fa-comment tenant-icon" aria-hidden="true"></i> Webhook configure:
-          </span>
-        </div>
-        <div class="col-md-6">
-          <input class="form-control" [(ngModel)]="webhookBaseUrl" [disabled]="!isEditing" style="width: 100%;">
-        </div>
-        <div class="col-md-1">
-          <button class="btn btn-dark btn-sm ms-4" (click)="toggleEdit()">
-            {{ isEditing ? 'UPDATE' : 'EDIT' }}
-          </button>
-        </div>
+    <div class="row">
+      <div class="col-md-12">
+        <span><i class="fa fa-comment tenant-icon" aria-hidden="true"></i> Cancel Request Reason:</span>
+        <span>
+          {{ selectedTenant?.cancelRequestReason || 'NA'}}
+        </span>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-2">
+        <span>
+          <i class="fa fa-comment tenant-icon" aria-hidden="true"></i> Webhook configure:
+        </span>
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" [(ngModel)]="webhookBaseUrl" [disabled]="!isEditing" style="width: 100%;">
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-dark btn-sm ms-4" (click)="toggleEdit()">
+          {{ isEditing ? 'UPDATE' : 'EDIT' }}
+        </button>
       </div>
     </div>
   </div>
@@ -227,4 +246,41 @@
       </button>
     </div>
   </form>
+</ng-template>
+
+<ng-template #threePLConfirmModal let-modal>
+  <div class="modal-header bg-light px-4 py-3">
+    <h5 class="modal-title w-100 fw-bold">
+      <i class="bi bi-shield-exclamation me-2 text-warning"></i>
+      Confirm 3PL Change
+    </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body px-4 py-3">
+    <p class="small text-muted mb-3">
+      You are about to update the <strong>3PL configuration</strong> for tenant:
+      <span class="badge bg-secondary ms-1">
+        {{ selectedTenant.tenantName }}
+      </span>
+    </p>
+
+
+    <p class="fw-semibold mb-0">
+      Are you sure you want to set 3PL to
+      <span class="badge bg-dark ms-1">
+        {{selectedTenant.threePL }}
+      </span>?
+    </p>
+  </div>
+
+  <div class="modal-footer px-4 py-3 bg-light">
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onCancel3PL();modal.dismiss('Cancel')">
+      <i class="bi bi-x-circle me-1"></i> Cancel
+    </button>
+
+    <button type="button" class="btn btn-danger btn-sm" (click)="confirm3PLChange(); modal.close('Confirmed')">
+      <i class="bi bi-check-circle me-1"></i> Yes
+    </button>
+  </div>
 </ng-template>

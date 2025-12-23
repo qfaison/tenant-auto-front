@@ -16,6 +16,7 @@ export class TenantDetailModalComponent {
   @Output() onHandleAccounts: EventEmitter<void> = new EventEmitter<void>();
 
   @Output() onUpdateEmail: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onUpdate3PL: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() webhookBaseUrl: string = '';
 
@@ -26,8 +27,15 @@ export class TenantDetailModalComponent {
   @Output() onSetupSSL: EventEmitter<string> = new EventEmitter<any>();
 
   editedEmail: string = '';
+  threePL: any;
 
-  constructor(private modalController: NgbModal) {}
+  constructor(private modalController: NgbModal) {
+    setTimeout(() => {
+      if (!this.selectedTenant.threePL) {
+        this.selectedTenant.threePL = 'N';
+      }
+    });
+  }
 
   onCloseModal() {}
 
@@ -107,5 +115,20 @@ export class TenantDetailModalComponent {
     }
 
     return 'Click to setup SSL';
+  }
+
+  on3PLChange(threePL: any, modelContent: any) {
+    this.threePL = threePL;
+    this.modalController.open(modelContent);
+  }
+
+  confirm3PLChange() {
+    this.onUpdate3PL.emit(this.threePL);
+    this.selectedTenant.threePL = this.threePL;
+  }
+
+  onCancel3PL() {
+    this.selectedTenant.threePL = this.threePL === 'Y' ? 'N' : 'Y';
+    console.log(this.selectedTenant.threePL);
   }
 }

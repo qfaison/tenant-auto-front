@@ -85,10 +85,8 @@
                       </li>
                       <li>
                         <span [title]="!tenant?.email ? 'No email available for this tenant' : ''"
-                          class="d-inline-block"
-                          [ngStyle]="{ cursor: !tenant?.email ? 'not-allowed' : 'pointer' }">
-                          <button class="dropdown-item" (click)="onSendWelcomEmail()"
-                            [disabled]="!tenant?.email">
+                          class="d-inline-block" [ngStyle]="{ cursor: !tenant?.email ? 'not-allowed' : 'pointer' }">
+                          <button class="dropdown-item" (click)="onSendWelcomEmail()" [disabled]="!tenant?.email">
                             <i class="fa fa-paper-plane me-1"></i> Send Welcome Mail
                           </button>
                         </span>
@@ -107,7 +105,8 @@
                 (onApproveCancelRequest)="onOpenConfirmationModal('APPROVE_CANCEL_REQ', approveCancelReq)"
                 [webhookBaseUrl]="webhookBaseUrl" (onHandleWebbhook)="onHandleWebbhook()"
                 (onUpdateWebhook)="onUpdateWebhook($event)" (onHandleAccounts)="onHandleAccounts()"
-                (onUpdateEmail)="onUpdateEmail($event)" (onSetupSSL)="onSetupSSL()"></app-tenant-detail-modal>
+                (onUpdateEmail)="onUpdateEmail($event)" (onSetupSSL)="onSetupSSL()"
+                (onUpdate3PL)="onUpdate3PL($event)"></app-tenant-detail-modal>
             </div>
           </div>
         </div>

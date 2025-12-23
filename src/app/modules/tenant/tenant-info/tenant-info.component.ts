@@ -366,4 +366,22 @@ export class TenantInfoComponent {
         },
       });
   }
+
+    onUpdate3PL(threePL: string) {
+    this._apiService
+      .post(API_CONSTANT.TENANT.UPDATE_THREEPL, {
+        body: { tenantId: this.tenant.tenantId, threePL },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.tenant.threePL = threePL;
+          this._toastService.showSuccess(
+            res.message ||
+              res.response?.message ||
+              MESSAGE_CONSTANT.TENANT.THREEPL_UPDATED_SUCCESSFULLY
+          );
+          this._modalService.dismissAll();
+        },
+      });
+  }
 }
