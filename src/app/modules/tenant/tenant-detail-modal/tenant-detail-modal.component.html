@@ -113,13 +113,13 @@
           <span class="fw-semibold">3PL:</span>
 
           <div class="form-check">
-            <label class="form-check-label" for="threePLY">Y</label>
+            <label class="form-check-label" for="threePLY">Yes</label>
             <input class="form-check-input" type="radio" name="threePL" id="threePLY" value="Y"
               [(ngModel)]="selectedTenant.threePL" (change)="on3PLChange('Y', threePLConfirmModal)" />
           </div>
 
           <div class="form-check">
-            <label class="form-check-label" for="threePLN">N</label>
+            <label class="form-check-label" for="threePLN">No</label>
             <input class="form-check-input" type="radio" name="threePL" id="threePLN" value="N"
               [(ngModel)]="selectedTenant.threePL" (change)="on3PLChange('N', threePLConfirmModal)" />
           </div>
@@ -254,7 +254,7 @@
       <i class="bi bi-shield-exclamation me-2 text-warning"></i>
       Confirm 3PL Change
     </h5>
-    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+    <button type="button" class="btn-close" (click)="confirm3PLChange(); modal.close('Confirmed')" aria-label="Close"></button>
   </div>
 
   <div class="modal-body px-4 py-3">
