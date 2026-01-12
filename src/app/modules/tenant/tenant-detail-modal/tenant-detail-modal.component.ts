@@ -17,6 +17,7 @@ export class TenantDetailModalComponent {
 
   @Output() onUpdateEmail: EventEmitter<string> = new EventEmitter<string>();
   @Output() onUpdate3PL: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onBPlannedProvision: EventEmitter<any> = new EventEmitter();
 
   @Input() webhookBaseUrl: string = '';
 
@@ -130,5 +131,9 @@ export class TenantDetailModalComponent {
   onCancel3PL() {
     this.selectedTenant.threePL = this.threePL === 'Y' ? 'N' : 'Y';
     console.log(this.selectedTenant.threePL);
+  }
+
+  bPlannedProvision(){
+    this.onBPlannedProvision.emit()
   }
 }

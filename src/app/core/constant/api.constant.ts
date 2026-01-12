@@ -19,6 +19,7 @@ export const API_CONSTANT = {
     UPDATE_EMAIL: 'tenant/email/update',
     SETUP_SSH: 'tenant/ssl/setup',
     UPDATE_THREEPL: 'tenant/3pl/update',
+    BPLANNED_PROVISION: 'tenant/bPlanned/provision'
 
   },
   BONANZA_CONNECT: {

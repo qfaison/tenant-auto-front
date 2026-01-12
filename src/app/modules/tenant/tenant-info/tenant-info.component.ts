@@ -367,7 +367,7 @@ export class TenantInfoComponent {
       });
   }
 
-    onUpdate3PL(threePL: string) {
+  onUpdate3PL(threePL: string) {
     this._apiService
       .post(API_CONSTANT.TENANT.UPDATE_THREEPL, {
         body: { tenantId: this.tenant.tenantId, threePL },
@@ -381,6 +381,38 @@ export class TenantInfoComponent {
               MESSAGE_CONSTANT.TENANT.THREEPL_UPDATED_SUCCESSFULLY
           );
           this._modalService.dismissAll();
+        },
+      });
+  }
+
+  bPlannedProvision() {
+    this._apiService
+      .post(API_CONSTANT.TENANT.BPLANNED_PROVISION, {
+        body: { tenantId: this.tenant.tenantId },
+      })
+      .subscribe({
+        next: (res: any) => {
+          this._toastService.showSuccess(
+            res.message ||
+              res.response?.message ||
+              MESSAGE_CONSTANT.TENANT.BPLANNED_PROVISION_SUCCESSFULLY
+          );
+          this.onFetchTenant()
+        },
+      });
+  }
+
+  onFetchTenant() {
+    this._apiService
+      .get(API_CONSTANT.TENANT.FETCH, {
+        query: { tenantId: this.tenant?.tenantId },
+      })
+      .subscribe({
+        next: (res: any) => {
+          // console.log(res.data.bankelo);
+          if (res.status === 200) {
+            this.tenant = res.data;
+          }
         },
       });
   }

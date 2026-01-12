@@ -126,6 +126,20 @@
         </div>
       </div>
 
+      <div class="row">
+              <div class="col-md-6">
+          <span>
+            <i class="fa fa-cogs tenant-icon" aria-hidden="true"></i> bPlanned:
+          </span>
+          <strong>{{ selectedTenant?.bPlanned?.dashboard_url || "N/A" }}</strong>
+
+          <!-- Show button only if a valid customDomain exists -->
+            <button class="btn btn-dark btn-sm ms-4" [disabled]="selectedTenant?.bPlanned?.dashboard_url" (click)="bPlannedProvision()">
+              <i class="fa fa-lock"></i> Provision bPlanned
+            </button>
+        </div>
+      </div>
+
     </div>
 
     <div class="row" style="display: flex;
