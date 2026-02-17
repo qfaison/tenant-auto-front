@@ -1,45 +1,36 @@
 {
-  "name": "tenant-setup",
-  "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --configuration production",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+  "name": "tenant-dashboard",
+  "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
   "dependencies": {
-    "@angular/animations": "^15.1.0",
-    "@angular/common": "^15.1.0",
-    "@angular/compiler": "^15.1.0",
-    "@angular/core": "^15.1.0",
-    "@angular/forms": "^15.1.0",
-    "@angular/platform-browser": "^15.1.0",
-    "@angular/platform-browser-dynamic": "^15.1.0",
-    "@angular/router": "^15.1.0",
-    "@ng-bootstrap/ng-bootstrap": "^14.1.1",
-    "@ng-select/ng-select": "^10.0.4",
-    "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.3.0",
-    "moment": "^2.30.1",
-    "ng-http-loader": "^12.0.0",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.12.0"
+    "@ant-design/icons": "^6.1.0",
+    "antd": "^6.2.2",
+    "axios": "^1.13.4",
+    "dayjs": "^1.11.19",
+    "next": "16.1.6",
+    "next-intl": "^4.8.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.71.1",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.1.2",
-    "@angular/cli": "~15.1.2",
-    "@angular/compiler-cli": "^15.1.0",
-    "@angular/localize": "^15.1.0",
-    "@types/jasmine": "~4.3.0",
-    "jasmine-core": "~4.5.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.9.4"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

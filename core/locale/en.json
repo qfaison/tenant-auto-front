@@ -1,0 +1,91 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "update": "Update",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "switchToLight": "Switch to light",
+    "switchToDark": "Switch to dark"
+  },
+  "auth": {
+    "login": "Login",
+    "welcomeBack": "Welcome Back!",
+    "username": "Username",
+    "password": "Password",
+    "usernamePlaceholder": "Enter your username",
+    "passwordPlaceholder": "Enter your password",
+    "usernameRequired": "Username is required",
+    "passwordRequired": "Password is required",
+    "logout": "Logout",
+    "loginSuccess": "Login successful",
+    "loginError": "Login failed",
+    "logoAlt": "Logo"
+  },
+  "tenant": {
+    "list": {
+      "title": "Tenants List",
+      "search": "Search by tenant ID or custom domain",
+      "create": "Create Tenant",
+      "exportBankelo": "Export Bankelo",
+      "bankeloOnly": "Bankelo Only",
+      "rowsPerPage": "rows",
+      "createTooltip": "Create a new tenant account",
+      "exportTooltip": "Export Bankelo tenant data to Excel",
+      "paginationTotal": "Total {total} items",
+      "table": {
+        "tenantId": "Tenant ID",
+        "tenantName": "Tenant Name",
+        "customDomain": "Custom Domain",
+        "email": "Email",
+        "cancelRequest": "Cancel Request",
+        "bankeloOnboarding": "Bankelo Onboarding",
+        "na": "NA"
+      }
+    },
+    "detail": {
+      "title": "Tenant Details",
+      "tenant": "Tenant",
+      "customDomain": "Custom Domain",
+      "bonanzaConnect": "Bonanza Connect",
+      "bankelo": "Bankelo",
+      "ghl": "GHL",
+      "webhook": "Webhook"
+    },
+    "create": {
+      "title": "Create Tenant",
+      "domainName": "Domain Name",
+      "domainNamePlaceholder": "Select domain",
+      "domainNameRequired": "Domain is required",
+      "tenantName": "Tenant Name",
+      "tenantNamePlaceholder": "Enter tenant name",
+      "tenantNameRequired": "Tenant name is required",
+      "apiKey": "API Key",
+      "apiKeyPlaceholder": "Enter API key",
+      "apiKeyRequired": "API key is required",
+      "email": "Email",
+      "emailPlaceholder": "Enter email",
+      "emailInvalid": "Invalid email address",
+      "customDomain": "Custom Domain",
+      "customDomainPlaceholder": "Enter custom domain",
+      "submit": "Submit"
+    }
+  },
+  "navbar": {
+    "tenants": "Bonanza Tenants",
+    "auth": "Auth",
+    "logoAlt": "Bonanza logo"
+  },
+  "notFound": {
+    "title": "404",
+    "subTitle": "Sorry, the page you visited does not exist.",
+    "backHome": "Back Home"
+  }
+}
