@@ -21,7 +21,9 @@ export function TenantTable({ tenants, loading }: TenantTableProps) {
 
   const handleRowClick = useCallback(
     (tenantId: string) => {
-      router.push(`/${APP_CONSTANT.ROUTES.TENANT.DETAIL}/${tenantId}`);
+      router.push(
+        `/${APP_CONSTANT.ROUTES.TENANT.DETAIL}?tenantId=${encodeURIComponent(tenantId)}`,
+      );
     },
     [router],
   );

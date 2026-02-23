@@ -1,48 +1,30 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { Spin } from "antd";
+import { TenantDetail } from "@/features/tenant/components/TenantDetail/TenantDetail";
 
 /**
- * Tenant detail page - query params fallback (?tenantId=xxx).
- * Redirects to /tenant/detail/[tenantId] when tenantId is present.
+ * Tenant detail page - reads tenantId from query (?tenantId=xxx).
+ * Renders TenantDetail for the given tenant; no dynamic route.
  */
 function TenantDetailContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const tenantId = searchParams.get("tenantId");
 
-  useEffect(() => {
-    if (tenantId) {
-      router.replace(`/tenant/detail/${tenantId}`);
-    }
-  }, [tenantId, router]);
-
-  if (tenantId) {
+  if (!tenantId) {
     return (
-      <div
-        style={{
-          padding: 24,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: 200,
-        }}
-      >
-        <Spin size="large" />
+      <div style={{ padding: 24 }}>
+        Missing tenantId. Use /tenant/detail?tenantId=xxx
       </div>
     );
   }
 
-  return (
-    <div style={{ padding: 24 }}>
-      Missing tenantId. Use /tenant/detail/[tenantId] or ?tenantId=xxx
-    </div>
-  );
+  return <TenantDetail tenantId={tenantId} />;
 }
 
-export default function TenantDetailQueryPage() {
+export default function TenantDetailPage() {
   return (
     <Suspense
       fallback={

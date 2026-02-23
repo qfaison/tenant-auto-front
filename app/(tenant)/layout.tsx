@@ -1,6 +1,7 @@
 "use client";
 
 import { Navbar } from "@/shared/components/Navbar/Navbar";
+import { RouteGuard } from "@/core/components/RouteGuard";
 
 export default function TenantLayout({
   children,
@@ -8,9 +9,9 @@ export default function TenantLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <RouteGuard>
       <Navbar />
       {children}
-    </>
+    </RouteGuard>
   );
 }

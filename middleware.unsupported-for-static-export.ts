@@ -1,3 +1,8 @@
+/**
+ * Middleware is not supported with output: 'export' (static export).
+ * This file is kept for reference. Rename back to middleware.ts when using
+ * a Node server (e.g. next start) instead of static export.
+ */
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
