@@ -28,6 +28,19 @@ export interface UpdateTenantParams {
   bundle?: File;
 }
 
+export interface BonanzaEntriesResult {
+  tenantId: string;
+  processedEntries: string[];
+  isUpToDate: boolean;
+  boothUser: Record<string, unknown> | null;
+  bonanzaConnectUser: {
+    tenantId: string;
+    name?: string;
+    email?: string;
+    isCreated: boolean;
+  };
+}
+
 export async function fetchTenants(params: FetchTenantsParams): Promise<{ data: Tenant[]; totalCounts: number }> {
   const res = await apiService.get<{ body?: TenantListResponse; data?: Tenant[]; totalCounts?: number }>(
     API_CONSTANT.TENANT.FETCH_WITH_PAGINATION,
@@ -87,6 +100,15 @@ export async function fetchWebhook(): Promise<{ baseUrl?: string }> {
   );
   const body = res.data?.body ?? res.data;
   return (body && typeof body === 'object' && 'baseUrl' in body) ? { baseUrl: (body as { baseUrl?: string }).baseUrl } : {};
+}
+
+export async function processMissingBonanzaEntries(tenantId: string): Promise<BonanzaEntriesResult> {
+  const res = await apiService.post<{ body?: BonanzaEntriesResult }>(
+    API_CONSTANT.TENANT.PROCESS_MISSING_BONANZA_ENTRIES,
+    { body: { tenantId } }
+  );
+  const data = res.data?.body ?? res.data;
+  return data as BonanzaEntriesResult;
 }
 
 export async function updateWebhook(baseUrl: string): Promise<unknown> {

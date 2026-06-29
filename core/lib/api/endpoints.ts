@@ -24,6 +24,7 @@ export const API_CONSTANT = {
     SETUP_SSH: 'tenant/ssl/setup',
     UPDATE_THREEPL: 'tenant/3pl/update',
     BPLANNED_PROVISION: 'tenant/bPlanned/provision',
+    PROCESS_MISSING_BONANZA_ENTRIES: 'tenant/bonanza/missing-entries',
   },
   BONANZA_CONNECT: {
     CREATE_TENANT: 'bonanzaconnect/create/tenant',

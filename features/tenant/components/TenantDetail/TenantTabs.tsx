@@ -11,7 +11,6 @@ import {
   Descriptions,
   Upload,
   Radio,
-  Typography,
   Tag,
   Tooltip,
   Form,
@@ -77,6 +76,8 @@ interface TenantTabsProps {
   tenant: Tenant | null;
   webhookBaseUrl: string;
   actionLoading: boolean;
+  bonanzaEntriesLoading: boolean;
+  onProcessMissingBonanzaEntries: () => Promise<void>;
   onBack: () => void;
   onUpdateWebhook: (baseUrl: string) => Promise<void>;
   onUpdateEmail: (email: string) => void;
@@ -120,6 +121,8 @@ export function TenantTabs({
   tenant,
   webhookBaseUrl,
   actionLoading,
+  bonanzaEntriesLoading,
+  onProcessMissingBonanzaEntries,
   onUpdateWebhook,
   onUpdateEmail,
   onSetupSSL,
@@ -357,12 +360,22 @@ export function TenantTabs({
                 <Card
                   title={`${t("tenant")} ${tenant?.tenantName ?? ""} Information`}
                   extra={
-                    <Dropdown
-                      menu={{ items: actionItems }}
-                      placement="bottomRight"
-                    >
-                      <Button icon={<SettingOutlined />}>Actions</Button>
-                    </Dropdown>
+                    <Space>
+                      <Button
+                        type="primary"
+                        icon={<UserOutlined />}
+                        loading={bonanzaEntriesLoading}
+                        onClick={onProcessMissingBonanzaEntries}
+                      >
+                        Create Booth &amp; Bonanza Users
+                      </Button>
+                      <Dropdown
+                        menu={{ items: actionItems }}
+                        placement="bottomRight"
+                      >
+                        <Button icon={<SettingOutlined />}>Actions</Button>
+                      </Dropdown>
+                    </Space>
                   }
                 >
                   <Descriptions column={2} bordered size="small">
@@ -558,6 +571,29 @@ export function TenantTabs({
                       </Radio.Group>
                     </Descriptions.Item>
 
+                    <Descriptions.Item label="Booth User ID">
+                      {String(tenant?.boothUser?.userID ?? "NA")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Booth User Name">
+                      {String(tenant?.boothUser?.userName ?? "NA")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Booth User Email">
+                      {String(tenant?.boothUser?.email ?? "NA")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Booth ID">
+                      {String(tenant?.boothUser?.boothID ?? "NA")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Booth URL">
+                      {(() => {
+                        const boothURL = tenant?.boothUser?.boothURL;
+                        return boothURL ? <a href={String(boothURL)} target="_blank" rel="noopener noreferrer">{String(boothURL)}</a> : "NA";
+                      })()}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Bonanza Connect User Created">
+                      <Tag color={tenant?.isBonanzaTenantCreated ? "success" : "default"}>
+                        {tenant?.isBonanzaTenantCreated ? "Yes" : "No"}
+                      </Tag>
+                    </Descriptions.Item>
                     {/* Row 7: bPlanned */}
                     <Descriptions.Item
                       label={
@@ -679,37 +715,6 @@ export function TenantTabs({
                     </Descriptions.Item>
                   </Descriptions>
 
-                  {/* Bonanza Connect Info Section - CONDITIONAL */}
-                  {(() => {
-                    const bonanzaEmail =
-                      tenant?.bonanzaConnect &&
-                      typeof tenant.bonanzaConnect === "object" &&
-                      "email" in tenant.bonanzaConnect
-                        ? (tenant.bonanzaConnect as { email?: string }).email
-                        : undefined;
-                    return bonanzaEmail ? (
-                      <>
-                        <Typography.Title
-                          level={5}
-                          style={{ marginTop: 24, marginBottom: 16 }}
-                        >
-                          Bonanza Connect Info
-                        </Typography.Title>
-                        <Descriptions column={2} bordered size="small">
-                          <Descriptions.Item
-                            label={
-                              <>
-                                <MailOutlined style={{ marginRight: 8 }} />{" "}
-                                Email
-                              </>
-                            }
-                          >
-                            {bonanzaEmail ?? "NA"}
-                          </Descriptions.Item>
-                        </Descriptions>
-                      </>
-                    ) : null;
-                  })()}
                 </Card>
               ),
             },

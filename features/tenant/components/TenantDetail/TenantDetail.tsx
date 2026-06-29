@@ -14,6 +14,8 @@ export function TenantDetail({ tenantId }: TenantDetailProps) {
     webhookBaseUrl,
     loading,
     actionLoading,
+    bonanzaEntriesLoading,
+    handleProcessMissingBonanzaEntries,
     handleMakePublic,
     handleMakePrivate,
     handleStop,
@@ -53,6 +55,8 @@ export function TenantDetail({ tenantId }: TenantDetailProps) {
           tenant={tenant}
           webhookBaseUrl={webhookBaseUrl}
           actionLoading={actionLoading}
+          bonanzaEntriesLoading={bonanzaEntriesLoading}
+          onProcessMissingBonanzaEntries={handleProcessMissingBonanzaEntries}
           onBack={() => {}}
           onUpdateWebhook={handleUpdateWebhook}
           onUpdateEmail={handleUpdateEmail}

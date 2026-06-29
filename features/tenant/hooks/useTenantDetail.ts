@@ -22,6 +22,7 @@ import {
   bankeloOnboardingDocument,
   uploadAppleVerificationFile,
   updateTenant,
+  processMissingBonanzaEntries,
 } from '../services/tenant.service';
 import type { UpdateTenantParams } from '../services/tenant.service';
 import { toastService } from '@/core/services/toast.service';
@@ -31,6 +32,7 @@ export function useTenantDetail(tenantId: string | null) {
   const [webhookBaseUrl, setWebhookBaseUrl] = useState('');
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
+  const [bonanzaEntriesLoading, setBonanzaEntriesLoading] = useState(false);
 
   // Refs to prevent duplicate API calls
   const fetchingTenantRef = useRef<string | null>(null);
@@ -99,6 +101,23 @@ export function useTenantDetail(tenantId: string | null) {
       setLoading(false);
     }
   }, [tenantId]);
+
+  const handleProcessMissingBonanzaEntries = useCallback(async () => {
+    if (!tenant?.tenantId) return;
+
+    setBonanzaEntriesLoading(true);
+    try {
+      const result = await processMissingBonanzaEntries(tenant.tenantId);
+      await loadTenant();
+      toastService.showSuccess(
+        result.processedEntries.length > 0
+          ? 'Bonanza users created successfully'
+          : 'Bonanza and Booth users are already created'
+      );
+    } finally {
+      setBonanzaEntriesLoading(false);
+    }
+  }, [tenant?.tenantId, loadTenant]);
 
   const loadWebhook = useCallback(async () => {
     try {
@@ -278,6 +297,8 @@ export function useTenantDetail(tenantId: string | null) {
     webhookBaseUrl,
     loading,
     actionLoading,
+    bonanzaEntriesLoading,
+    handleProcessMissingBonanzaEntries,
     loadTenant,
     loadWebhook,
     handleMakePublic,

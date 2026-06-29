@@ -24,6 +24,8 @@ export interface Tenant {
   bankelo?: BankeloInfo;
   ghl?: GHLInfo;
   bonanzaConnect?: BonanzaConnectInfo;
+  boothUser?: Record<string, unknown> | null;
+  isBonanzaTenantCreated?: boolean;
   [key: string]: unknown; // Allow additional properties
 }
 
