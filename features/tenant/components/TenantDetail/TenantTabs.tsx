@@ -77,6 +77,7 @@ interface TenantTabsProps {
   webhookBaseUrl: string;
   actionLoading: boolean;
   bonanzaEntriesLoading: boolean;
+  onUpdatePassword: () => void;
   onProcessMissingBonanzaEntries: () => Promise<void>;
   onBack: () => void;
   onUpdateWebhook: (baseUrl: string) => Promise<void>;
@@ -122,6 +123,7 @@ export function TenantTabs({
   webhookBaseUrl,
   actionLoading,
   bonanzaEntriesLoading,
+  onUpdatePassword,
   onProcessMissingBonanzaEntries,
   onUpdateWebhook,
   onUpdateEmail,
@@ -161,6 +163,32 @@ export function TenantTabs({
   const [restartModalOpen, setRestartModalOpen] = useState(false);
   const [bankeloOnboardingModalOpen, setBankeloOnboardingModalOpen] =
     useState(false);
+  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+
+  const TAB_KEYS = [
+    "tenant",
+    "custom-domain",
+    "bonanza-connect",
+    "bankelo",
+    "ghl",
+    "apple",
+  ];
+  const [activeTab, setActiveTab] = useState<string>("tenant");
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash === "update-password") {
+      setActionsMenuOpen(true);
+    } else if (TAB_KEYS.includes(hash)) {
+      setActiveTab(hash);
+    }
+  }, []);
+
+  const handleTabChange = (key: string) => {
+    setActiveTab(key);
+    const { pathname, search } = window.location;
+    router.push(`${pathname}${search}#${key}`, { scroll: false });
+  };
 
   // Apple Verification form state
   const [appleVerificationFile, setAppleVerificationFile] =
@@ -265,6 +293,12 @@ export function TenantTabs({
       icon: <SendOutlined />,
       onClick: onSendWelcomeEmail,
       disabled: !tenant?.email,
+    },
+    {
+      key: "updatePassword",
+      label: "Update Password",
+      icon: <KeyOutlined />,
+      onClick: onUpdatePassword,
     },
   ];
 
@@ -372,8 +406,12 @@ export function TenantTabs({
                       <Dropdown
                         menu={{ items: actionItems }}
                         placement="bottomRight"
+                        open={actionsMenuOpen}
+                        onOpenChange={setActionsMenuOpen}
                       >
-                        <Button icon={<SettingOutlined />}>Actions</Button>
+                        <Button id="update-password" icon={<SettingOutlined />}>
+                          Actions
+                        </Button>
                       </Dropdown>
                     </Space>
                   }

@@ -151,6 +151,11 @@ export async function setupTenantSSL(tenantId: string): Promise<unknown> {
   return res.data;
 }
 
+export async function updateTenantPassword(tenantId: string): Promise<unknown> {
+  const res = await apiService.post(API_CONSTANT.TENANT.UPDATE_PASSWORD, { body: { tenantId } });
+  return res.data;
+}
+
 export async function updateTenant3PL(tenantId: string, threePL: string): Promise<unknown> {
   const res = await apiService.post(API_CONSTANT.TENANT.UPDATE_THREEPL, { body: { tenantId, threePL } });
   return res.data;

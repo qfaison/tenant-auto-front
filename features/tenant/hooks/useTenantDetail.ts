@@ -13,6 +13,7 @@ import {
   sendWelcomeEmail,
   updateTenantEmail,
   setupTenantSSL,
+  updateTenantPassword,
   updateTenant3PL,
   bPlannedProvision,
   approveCancelRequest,
@@ -188,6 +189,26 @@ export function useTenantDetail(tenantId: string | null) {
     runAction(() => setupTenantSSL(tenant.tenantId), 'SSL setup initiated');
   }, [tenant?.tenantId, runAction]);
 
+  const handleUpdatePassword = useCallback(async () => {
+    if (!tenant?.tenantId) return;
+
+    setActionLoading(true);
+    try {
+      const response = await updateTenantPassword(tenant.tenantId);
+      const body = (response as { body?: { status?: string }; message?: string })?.body;
+      const message = (response as { message?: string })?.message || 'Password update scheduled';
+
+      if (body?.status === 'SUCCEEDED') {
+        toastService.showWarning('Password is already updated');
+      } else {
+        toastService.showSuccess(message);
+      }
+      loadTenant();
+    } finally {
+      setActionLoading(false);
+    }
+  }, [tenant?.tenantId, loadTenant]);
+
   const handleUpdate3PL = useCallback(
     async (threePL: string) => {
       if (!tenant?.tenantId) return;
@@ -298,6 +319,7 @@ export function useTenantDetail(tenantId: string | null) {
     loading,
     actionLoading,
     bonanzaEntriesLoading,
+    handleUpdatePassword,
     handleProcessMissingBonanzaEntries,
     loadTenant,
     loadWebhook,
