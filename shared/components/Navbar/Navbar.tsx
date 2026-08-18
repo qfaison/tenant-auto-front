@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/core/lib/hash-router";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/core/hooks/useAuth";
 import { APP_CONSTANT } from "@/core/utils/constants";

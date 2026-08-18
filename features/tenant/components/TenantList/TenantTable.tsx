@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { Table, Tag, Empty } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/core/lib/hash-router";
 import { useTranslations } from "next-intl";
 import type { Tenant } from "@/shared/types/tenant";
 import dayjs from "dayjs";

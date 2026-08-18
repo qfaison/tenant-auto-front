@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/core/lib/hash-router";
 import { useAuth } from "@/core/hooks/useAuth";
 import { APP_CONSTANT } from "@/core/utils/constants";
 
@@ -15,9 +15,7 @@ export function RouteGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (pathname?.startsWith("/tenant") && !isAuthenticated) {
-      const loginPath = `/${APP_CONSTANT.ROUTES.USER.LOGIN}`;
-      const currentPath = pathname || "/";
-      router.replace(`${loginPath}?from=${encodeURIComponent(currentPath)}`);
+      router.replace(`/${APP_CONSTANT.ROUTES.USER.LOGIN}`);
     }
   }, [isAuthenticated, pathname, router]);
 

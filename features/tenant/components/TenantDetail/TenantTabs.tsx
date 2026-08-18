@@ -67,7 +67,7 @@ import {
   PaperClipOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "@/core/lib/hash-router";
 import type { Tenant } from "@/shared/types/tenant";
 import { useTranslations } from "next-intl";
 import type { UpdateTenantParams } from "../../services/tenant.service";
@@ -145,6 +145,8 @@ export function TenantTabs({
   actions,
 }: TenantTabsProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const t = useTranslations("tenant.detail");
   const { token } = useToken();
   const [emailModalOpen, setEmailModalOpen] = useState(false);
@@ -176,18 +178,20 @@ export function TenantTabs({
   const [activeTab, setActiveTab] = useState<string>("tenant");
 
   useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (hash === "update-password") {
+    const tab = searchParams.get("tab");
+    if (tab === "update-password") {
       setActionsMenuOpen(true);
-    } else if (TAB_KEYS.includes(hash)) {
-      setActiveTab(hash);
+    } else if (tab && TAB_KEYS.includes(tab)) {
+      setActiveTab(tab);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleTabChange = (key: string) => {
     setActiveTab(key);
-    const { pathname, search } = window.location;
-    router.push(`${pathname}${search}#${key}`, { scroll: false });
+    const params = new URLSearchParams(searchParams);
+    params.set("tab", key);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   // Apple Verification form state

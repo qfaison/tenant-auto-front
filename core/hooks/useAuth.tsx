@@ -5,7 +5,6 @@ import {
   useContext,
   useCallback,
   useState,
-  useEffect,
   type ReactNode,
 } from "react";
 import { storageService } from "../services/storage.service";
@@ -18,21 +17,12 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+function hasToken(): boolean {
+  return !!storageService.getToken();
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    queueMicrotask(() => setMounted(true));
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || typeof window === "undefined") return;
-    queueMicrotask(() => {
-      const token = storageService.getToken();
-      setIsAuthenticated(!!token);
-    });
-  }, [mounted]);
+  const [isAuthenticated, setIsAuthenticated] = useState(hasToken);
 
   const login = useCallback(
     (userData: { username: string; password: string }) => {

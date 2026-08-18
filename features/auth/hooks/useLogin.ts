@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/core/lib/hash-router';
 import { isAxiosError } from 'axios';
 import { useAuth } from '@/core/hooks/useAuth';
 import { toastService } from '@/core/services/toast.service';

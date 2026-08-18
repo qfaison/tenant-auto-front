@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/core/lib/hash-router";
 import { useAuth } from "@/core/hooks/useAuth";
 import { LoginForm } from "@/features/auth/components/LoginForm";
 import { ThemeToggle } from "@/shared/components/ThemeToggle";
 import { APP_CONSTANT } from "@/core/utils/constants";
 
-export default function LoginPage() {
+export function LoginPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 

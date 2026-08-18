@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { Button, Result } from "antd";
+import { APP_CONSTANT } from "@/core/utils/constants";
 
 export function NotFound() {
   const t = useTranslations("notFound");
@@ -14,9 +14,9 @@ export function NotFound() {
         title={t("title")}
         subTitle={t("subTitle")}
         extra={
-          <Link href="/tenant/list">
+          <a href={`#/${APP_CONSTANT.ROUTES.TENANT.LIST}`}>
             <Button type="primary">{t("backHome")}</Button>
-          </Link>
+          </a>
         }
       />
     </div>
