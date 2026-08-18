@@ -10,15 +10,16 @@ import { APP_CONSTANT } from "@/core/utils/constants";
  */
 export default function RootPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isInitializing } = useAuth();
 
   useEffect(() => {
+    if (isInitializing) return;
     if (isAuthenticated) {
       router.replace(`/${APP_CONSTANT.ROUTES.TENANT.LIST}`);
     } else {
       router.replace(`/${APP_CONSTANT.ROUTES.USER.LOGIN}`);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isInitializing, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">

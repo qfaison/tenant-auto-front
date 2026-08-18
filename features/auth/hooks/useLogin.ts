@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { isAxiosError } from 'axios';
 import { useAuth } from '@/core/hooks/useAuth';
 import { toastService } from '@/core/services/toast.service';
@@ -20,6 +20,7 @@ function getLoginErrorMessage(err: unknown): string {
 
 export function useLogin() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { login: setAuth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,14 +40,15 @@ export function useLogin() {
           ? { username: body.username, password: body.password ?? credentials.password }
           : credentials;
         setAuth(userData);
-        router.push(`/${APP_CONSTANT.ROUTES.TENANT.LIST}`);
+        const from = searchParams.get('from');
+        router.push(from || `/${APP_CONSTANT.ROUTES.TENANT.LIST}`);
       } catch (err) {
         setError(getLoginErrorMessage(err));
       } finally {
         setLoading(false);
       }
     },
-    [router, setAuth]
+    [router, searchParams, setAuth]
   );
 
   return { submitLogin, loading, error, clearError };

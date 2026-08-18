@@ -12,6 +12,7 @@ import { storageService } from "../services/storage.service";
 
 type AuthContextValue = {
   isAuthenticated: boolean;
+  isInitializing: boolean;
   login: (userData: { username: string; password: string }) => void;
   logout: () => void;
 };
@@ -19,20 +20,17 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => typeof window !== "undefined" && !!storageService.getToken(),
+  );
+  const [isInitializing, setIsInitializing] = useState(
+    () => typeof window === "undefined",
+  );
 
   useEffect(() => {
-    queueMicrotask(() => setMounted(true));
+    setIsAuthenticated(!!storageService.getToken());
+    setIsInitializing(false);
   }, []);
-
-  useEffect(() => {
-    if (!mounted || typeof window === "undefined") return;
-    queueMicrotask(() => {
-      const token = storageService.getToken();
-      setIsAuthenticated(!!token);
-    });
-  }, [mounted]);
 
   const login = useCallback(
     (userData: { username: string; password: string }) => {
@@ -49,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value: AuthContextValue = {
     isAuthenticated,
+    isInitializing,
     login,
     logout,
   };

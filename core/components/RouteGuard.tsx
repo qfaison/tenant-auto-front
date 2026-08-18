@@ -11,15 +11,26 @@ import { APP_CONSTANT } from "@/core/utils/constants";
 export function RouteGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isInitializing } = useAuth();
 
   useEffect(() => {
+    if (isInitializing) return;
     if (pathname?.startsWith("/tenant") && !isAuthenticated) {
       const loginPath = `/${APP_CONSTANT.ROUTES.USER.LOGIN}`;
       const currentPath = pathname || "/";
       router.replace(`${loginPath}?from=${encodeURIComponent(currentPath)}`);
     }
-  }, [isAuthenticated, pathname, router]);
+  }, [isAuthenticated, isInitializing, pathname, router]);
+
+  if (isInitializing) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto" />
+        </div>
+      </div>
+    );
+  }
 
   if (pathname?.startsWith("/tenant") && !isAuthenticated) {
     return (

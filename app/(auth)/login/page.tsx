@@ -1,21 +1,22 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/core/hooks/useAuth";
 import { LoginForm } from "@/features/auth/components/LoginForm";
 import { ThemeToggle } from "@/shared/components/ThemeToggle";
 import { APP_CONSTANT } from "@/core/utils/constants";
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const searchParams = useSearchParams();
+  const { isAuthenticated, isInitializing } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.replace(`/${APP_CONSTANT.ROUTES.TENANT.LIST}`);
-    }
-  }, [isAuthenticated, router]);
+    if (isInitializing || !isAuthenticated) return;
+    const from = searchParams.get("from");
+    router.replace(from || `/${APP_CONSTANT.ROUTES.TENANT.LIST}`);
+  }, [isAuthenticated, isInitializing, router, searchParams]);
 
   return (
     <div className="auth-page-bg min-h-screen flex items-center justify-center p-4 md:p-6 relative">
@@ -26,5 +27,13 @@ export default function LoginPage() {
         <LoginForm />
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageContent />
+    </Suspense>
   );
 }
